@@ -1,0 +1,24 @@
+/* Custom Swiper button styles */
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: #D1D5DB; /* Change to your preferred color */
+  color: #374151; /* Text color */
+  border-radius: 50%; /* Circular buttons */
+  width: 38px; /* Button width */
+  height: 38px; /* Button height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease; /* Smooth transition */
+  font-weight: bold;
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: #D1D5DB;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 14px; /* Icon size */
+}
