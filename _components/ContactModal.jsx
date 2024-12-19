@@ -161,7 +161,7 @@ const ContactModal = ({ modalClicked, onCloseClicked, serviceClicked }) => {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <form className='relative flex flex-col h-[33rem] overflow-y-auto' onSubmit={handleSubmit}>
+                            <form className='relative flex flex-col h-[33rem] md:h-full overflow-y-auto' onSubmit={handleSubmit}>
                                 <ModalHeader className="flex flex-col gap-1">{"Contact Form"}</ModalHeader>
                                 <ModalBody>
 
