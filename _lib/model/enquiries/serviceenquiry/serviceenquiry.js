@@ -8,6 +8,7 @@ const serviceenquiriesModel = new mongoose.Schema({
     city: String,
     query: String,
     service: String,
+    hotelname: String,
 });
 
 export const ServiceEnquiries = mongoose.models.serviceenquiries || mongoose.model("serviceenquiries", serviceenquiriesModel);

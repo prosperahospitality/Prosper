@@ -19,25 +19,64 @@ export async function POST(request) {
 
     console.log("Payload:::::::>", payload)
 
-    const formValues = payload.formValues;
+    if (payload.operation === "serviceContactt") {
 
-    const data = {
-        fullname: formValues.fullName,
-        phonenumber: formValues.phoneNumber,
-        email: formValues.email,
-        state: formValues.selectedState,
-        city: formValues.selectedCity,
-        query: formValues.query,
-        service: formValues.service,
+        const formValues = payload.formValues;
+
+        const data = {
+            fullname: formValues.name,
+            phonenumber: formValues.number,
+            email: formValues.email,
+            state: "",
+            city: "",
+            query: "",
+            service: "Contact",
+            hotelname: formValues.organization,
+        }
+
+        const result = await ServiceEnquiries.create(data)
+
+        return NextResponse.json({ result: result, success: true })
+
+    } else if (payload.operation === "serviceContact2") {
+
+        const formValues = payload.formValues;
+
+        const data = {
+            fullname: formValues.name,
+            phonenumber: formValues.number,
+            email: formValues.email,
+            state: "",
+            city: "",
+            query: "",
+            service: "Footer Contact",
+            hotelname: "",
+        }
+
+        const result = await ServiceEnquiries.create(data)
+
+        return NextResponse.json({ result: result, success: true })
+
+    } else {
+
+        const formValues = payload.formValues;
+
+        const data = {
+            fullname: formValues.fullName,
+            phonenumber: formValues.phoneNumber,
+            email: formValues.email,
+            state: formValues.selectedState,
+            city: formValues.selectedCity,
+            query: formValues.query,
+            service: formValues.service,
+            hotelname: "",
+        }
+
+        const result = await ServiceEnquiries.create(data)
+
+        return NextResponse.json({ result: result, success: true })
+
     }
-
-    const result = await ServiceEnquiries.create(data)
-
-    return NextResponse.json({ result: result, success: true })
-
-
-
-
 
 
 }

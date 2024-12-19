@@ -29,7 +29,7 @@ const ContacUsComp = () => {
   };
 
   const validateNumber = (number) => {
-    const numberRegex = /^\d{10}$/; 
+    const numberRegex = /^\d{10}$/;
     return numberRegex.test(number);
   };
 
@@ -75,25 +75,25 @@ const ContacUsComp = () => {
 
     setIsSending(true);
 
-      // emailjs
-      //   .sendForm(
-      //     process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
-      //     process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
-      //     form.current,
-      //     process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
-      //   )
-      //   .then(
-      //     () => {
-      //       console.log("SUCCESS!");
-      //       form.current.reset();
-      //       setIsSending(false);
-      //       setErrors({}); // Clear errors after successful submission
-      //     },
-      //     (error) => {
-      //       console.log("FAILED...", error.text);
-      //       setIsSending(false);
-      //     }
-      //   );
+    // emailjs
+    //   .sendForm(
+    //     process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID,
+    //     process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID,
+    //     form.current,
+    //     process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+    //   )
+    //   .then(
+    //     () => {
+    //       console.log("SUCCESS!");
+    //       form.current.reset();
+    //       setIsSending(false);
+    //       setErrors({}); // Clear errors after successful submission
+    //     },
+    //     (error) => {
+    //       console.log("FAILED...", error.text);
+    //       setIsSending(false);
+    //     }
+    //   );
 
 
     const abc = async () => {
@@ -104,6 +104,18 @@ const ContacUsComp = () => {
         number: form.current["number"].value,
         organization: form.current["organization"].value,
       };
+
+      const response1 = await fetch('/api/enquiries/serviceenquiry', {
+
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          operation: "serviceContactt",
+          formValues: formValues,
+        }),
+      });
+
+      const data1 = await response1.json();
 
       const response = await fetch('/api/send-email', {
 
@@ -118,7 +130,18 @@ const ContacUsComp = () => {
       const data = await response.json();
 
       if (response.ok) {
-        alert('Email sent successfully!');
+        Swal.fire({
+
+          title: "Form submitted successfully!",
+
+          text: "Team connect with you soon",
+
+          icon: "success"
+
+        }).then((result) => {
+
+
+        });
         form.current.reset();
         setIsSending(false);
       } else {
@@ -164,50 +187,50 @@ const ContacUsComp = () => {
     <>
 
 
-<div className="p-10 bg-red-100 w-full h-full">
-          <div className="w-full lg:w-[95%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 h-full lg:h-60">
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false }}
-              variants={sectionVariants}
-              className="bg-white rounded-2xl flex justify-center items-center flex-col p-5 gap-5"
-            >
-              <h2 className="text-themeColor text-xl font-semibold">+91- 70217 19028</h2>
-              <p className="text-gray-500 text-center">
-                For all inquiries regarding to booking call us any time at the
-                above number
-              </p>
-            </motion.div>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false }}
-              variants={sectionVariants}
-              className="bg-white rounded-2xl flex justify-center items-center flex-col p-5 gap-5"
-            >
-              <h2 className="text-themeColor text-xl font-semibold">
+      <div className="p-10 bg-red-100 w-full h-full">
+        <div className="w-full lg:w-[95%] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 h-full lg:h-60">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false }}
+            variants={sectionVariants}
+            className="bg-white rounded-2xl flex justify-center items-center flex-col p-5 gap-5"
+          >
+            <h2 className="text-themeColor text-xl font-semibold">+91- 70217 19028</h2>
+            <p className="text-gray-500 text-center">
+              For all inquiries regarding to booking call us any time at the
+              above number
+            </p>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false }}
+            variants={sectionVariants}
+            className="bg-white rounded-2xl flex justify-center items-center flex-col p-5 gap-5"
+          >
+            <h2 className="text-themeColor text-xl font-semibold">
               prosperaahospitality@gmail.com
-              </h2>
-              <p className="text-gray-500 text-center">
-                For all inquiries regarding to booking email us any time at the
-                above email address
-              </p>
-            </motion.div>
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: false }}
-              variants={sectionVariants}
-              className="bg-white rounded-2xl flex justify-center items-center flex-col p-5 gap-5"
-            >
-              <h2 className="text-themeColor text-xl font-semibold">Prospera Hospitality</h2>
-              <p className="text-gray-500 text-center">
+            </h2>
+            <p className="text-gray-500 text-center">
+              For all inquiries regarding to booking email us any time at the
+              above email address
+            </p>
+          </motion.div>
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: false }}
+            variants={sectionVariants}
+            className="bg-white rounded-2xl flex justify-center items-center flex-col p-5 gap-5"
+          >
+            <h2 className="text-themeColor text-xl font-semibold">Prospera Hospitality</h2>
+            <p className="text-gray-500 text-center">
               Office No.1006 Juhi Niharika Mirage, 274, Kopra Rd, Sector 10, Kharghar, Navi Mumbai, Maharashtra 410210.
-              </p>
-            </motion.div>
-          </div>
+            </p>
+          </motion.div>
         </div>
+      </div>
 
 
 
@@ -285,29 +308,29 @@ const ContacUsComp = () => {
                           name="name"
                           placeholder="Your Name"
                           isRequired
-                          // classNames={{
-                          //   label: "text-black/50 dark:text-white/90",
-                          //   input: [
-                          //     "bg-transparent",
-                          //     "text-gray-500 dark:text-white/90",
-                          //     "placeholder:text-gray-50 dark:placeholder:text-gray-400",
-                          //     "text-xs",
-                          //   ],
-                          //   innerWrapper: "bg-transparent",
-                          //   inputWrapper: [
-                          //     "border",
-                          //     "border-gray-300",
-                          //     "bg-gray-400",
-                          //     "dark:bg-gray-200",
-                          //     "backdrop-blur-xl",
-                          //     "backdrop-saturate-200",
-                          //     "hover:bg-default-200/70",
-                          //     "dark:hover:bg-default/70",
-                          //     "group-data-[focus=true]:bg-default-200/50",
-                          //     "dark:group-data-[focus=true]:bg-default/60",
-                          //     "!cursor-text",
-                          //   ],
-                          // }}
+                        // classNames={{
+                        //   label: "text-black/50 dark:text-white/90",
+                        //   input: [
+                        //     "bg-transparent",
+                        //     "text-gray-500 dark:text-white/90",
+                        //     "placeholder:text-gray-50 dark:placeholder:text-gray-400",
+                        //     "text-xs",
+                        //   ],
+                        //   innerWrapper: "bg-transparent",
+                        //   inputWrapper: [
+                        //     "border",
+                        //     "border-gray-300",
+                        //     "bg-gray-400",
+                        //     "dark:bg-gray-200",
+                        //     "backdrop-blur-xl",
+                        //     "backdrop-saturate-200",
+                        //     "hover:bg-default-200/70",
+                        //     "dark:hover:bg-default/70",
+                        //     "group-data-[focus=true]:bg-default-200/50",
+                        //     "dark:group-data-[focus=true]:bg-default/60",
+                        //     "!cursor-text",
+                        //   ],
+                        // }}
                         />
                         {errors.name && (
                           <p className="text-red-500 text-xs mt-1">
@@ -322,29 +345,29 @@ const ContacUsComp = () => {
                           placeholder="Email Address"
                           name="email"
                           isRequired
-                          // classNames={{
-                          //   label: "text-black/50 dark:text-white/90",
-                          //   input: [
-                          //     "bg-transparent",
-                          //     "text-gray-500 dark:text-white/90",
-                          //     "placeholder:text-gray-500 dark:placeholder:text-gray-400",
-                          //     "text-xs",
-                          //   ],
-                          //   innerWrapper: "bg-transparent",
-                          //   inputWrapper: [
-                          //     "border",
-                          //     "border-gray-300",
-                          //     "bg-gray-400",
-                          //     "dark:bg-gray-200",
-                          //     "backdrop-blur-xl",
-                          //     "backdrop-saturate-200",
-                          //     "hover:bg-default-200/70",
-                          //     "dark:hover:bg-default/70",
-                          //     "group-data-[focus=true]:bg-default-200/50",
-                          //     "dark:group-data-[focus=true]:bg-default/60",
-                          //     "!cursor-text",
-                          //   ],
-                          // }}
+                        // classNames={{
+                        //   label: "text-black/50 dark:text-white/90",
+                        //   input: [
+                        //     "bg-transparent",
+                        //     "text-gray-500 dark:text-white/90",
+                        //     "placeholder:text-gray-500 dark:placeholder:text-gray-400",
+                        //     "text-xs",
+                        //   ],
+                        //   innerWrapper: "bg-transparent",
+                        //   inputWrapper: [
+                        //     "border",
+                        //     "border-gray-300",
+                        //     "bg-gray-400",
+                        //     "dark:bg-gray-200",
+                        //     "backdrop-blur-xl",
+                        //     "backdrop-saturate-200",
+                        //     "hover:bg-default-200/70",
+                        //     "dark:hover:bg-default/70",
+                        //     "group-data-[focus=true]:bg-default-200/50",
+                        //     "dark:group-data-[focus=true]:bg-default/60",
+                        //     "!cursor-text",
+                        //   ],
+                        // }}
                         />
                         {errors.email && (
                           <p className="text-red-500 text-xs mt-1">
@@ -359,29 +382,29 @@ const ContacUsComp = () => {
                           name="number"
                           placeholder="Phone Number"
                           isRequired
-                          // classNames={{
-                          //   label: "text-black/50 dark:text-white/90",
-                          //   input: [
-                          //     "bg-transparent",
-                          //     "text-gray-500 dark:text-white/90",
-                          //     "placeholder:text-gray-500 dark:placeholder:text-gray-400",
-                          //     "text-xs",
-                          //   ],
-                          //   innerWrapper: "bg-transparent",
-                          //   inputWrapper: [
-                          //     "border",
-                          //     "border-gray-300",
-                          //     "bg-gray-400",
-                          //     "dark:bg-gray-200",
-                          //     "backdrop-blur-xl",
-                          //     "backdrop-saturate-200",
-                          //     "hover:bg-default-200/70",
-                          //     "dark:hover:bg-default/70",
-                          //     "group-data-[focus=true]:bg-default-200/50",
-                          //     "dark:group-data-[focus=true]:bg-default/60",
-                          //     "!cursor-text",
-                          //   ],
-                          // }}
+                        // classNames={{
+                        //   label: "text-black/50 dark:text-white/90",
+                        //   input: [
+                        //     "bg-transparent",
+                        //     "text-gray-500 dark:text-white/90",
+                        //     "placeholder:text-gray-500 dark:placeholder:text-gray-400",
+                        //     "text-xs",
+                        //   ],
+                        //   innerWrapper: "bg-transparent",
+                        //   inputWrapper: [
+                        //     "border",
+                        //     "border-gray-300",
+                        //     "bg-gray-400",
+                        //     "dark:bg-gray-200",
+                        //     "backdrop-blur-xl",
+                        //     "backdrop-saturate-200",
+                        //     "hover:bg-default-200/70",
+                        //     "dark:hover:bg-default/70",
+                        //     "group-data-[focus=true]:bg-default-200/50",
+                        //     "dark:group-data-[focus=true]:bg-default/60",
+                        //     "!cursor-text",
+                        //   ],
+                        // }}
                         />
                         {errors.number && (
                           <p className="text-red-500 text-xs mt-1">
@@ -393,32 +416,32 @@ const ContacUsComp = () => {
                       <div>
                         <Input
                           type="text"
-                          placeholder="Organization Name"
+                          placeholder="Hotel Name"
                           name="organization"
-                          isRequired
-                          // classNames={{
-                          //   label: "text-black/50 dark:text-white/90",
-                          //   input: [
-                          //     "bg-transparent",
-                          //     "text-gray-500 dark:text-white/90",
-                          //     "placeholder:text-gray-500 dark:placeholder:text-gray-400",
-                          //     "text-xs",
-                          //   ],
-                          //   innerWrapper: "bg-transparent",
-                          //   inputWrapper: [
-                          //     "border",
-                          //     "border-gray-300",
-                          //     "bg-gray-400",
-                          //     "dark:bg-gray-200",
-                          //     "backdrop-blur-xl",
-                          //     "backdrop-saturate-200",
-                          //     "hover:bg-default-200/70",
-                          //     "dark:hover:bg-default/70",
-                          //     "group-data-[focus=true]:bg-default-200/50",
-                          //     "dark:group-data-[focus=true]:bg-default/60",
-                          //     "!cursor-text",
-                          //   ],
-                          // }}
+
+                        // classNames={{
+                        //   label: "text-black/50 dark:text-white/90",
+                        //   input: [
+                        //     "bg-transparent",
+                        //     "text-gray-500 dark:text-white/90",
+                        //     "placeholder:text-gray-500 dark:placeholder:text-gray-400",
+                        //     "text-xs",
+                        //   ],
+                        //   innerWrapper: "bg-transparent",
+                        //   inputWrapper: [
+                        //     "border",
+                        //     "border-gray-300",
+                        //     "bg-gray-400",
+                        //     "dark:bg-gray-200",
+                        //     "backdrop-blur-xl",
+                        //     "backdrop-saturate-200",
+                        //     "hover:bg-default-200/70",
+                        //     "dark:hover:bg-default/70",
+                        //     "group-data-[focus=true]:bg-default-200/50",
+                        //     "dark:group-data-[focus=true]:bg-default/60",
+                        //     "!cursor-text",
+                        //   ],
+                        // }}
                         />
                         {errors.organization && (
                           <p className="text-red-500 text-xs mt-1">

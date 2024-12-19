@@ -157,11 +157,11 @@ const ContactModal = ({ modalClicked, onCloseClicked, serviceClicked }) => {
 
     return (
         <div>
-            <Modal isOpen={isOpen} onOpenChange={onOpenChange} className='mymodal' id="mymodal">
+            <Modal isOpen={isOpen} scrollBehavior='inside' onOpenChange={onOpenChange} className='mymodal' id="mymodal">
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <form className='flex flex-col' onSubmit={handleSubmit}>
+                            <form className='relative flex flex-col h-[33rem] overflow-y-auto' onSubmit={handleSubmit}>
                                 <ModalHeader className="flex flex-col gap-1">{"Contact Form"}</ModalHeader>
                                 <ModalBody>
 
@@ -216,8 +216,8 @@ const ContactModal = ({ modalClicked, onCloseClicked, serviceClicked }) => {
                                                     }}
                                                     onChange={handleCityChange}
                                                 >
-                                                    {cities?.map((city) => (
-                                                        <SelectItem key={city}>
+                                                    {[...new Set(cities)]?.map((city, index) => (
+                                                        <SelectItem key={city || index}>
                                                             {city}
                                                         </SelectItem>
                                                     ))}

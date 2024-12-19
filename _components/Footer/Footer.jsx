@@ -45,6 +45,22 @@ export default function Footer() {
 
     console.log("Data", email, fullName, phoneNumber)
 
+    const response1 = await fetch('/api/enquiries/serviceenquiry', {
+
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        operation: "serviceContact2",
+        formValues: {
+          name: fullName,
+          email: email,
+          number: phoneNumber,
+        },
+      }),
+    });
+
+    const data1 = await response1.json();
+
     const response = await axios.post("/api/send-email", {
       operation: "footercontact",
       name: fullName,

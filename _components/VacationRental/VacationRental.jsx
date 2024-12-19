@@ -14,7 +14,7 @@ const VacationRental = () => {
         </h2>
         <div className="grid grid-cols-1 gap-0 mt-4">
           <p className="text-base sm:text-lg mt-4 font-normal text-gray-500 text-justify">
-          Are you a property owner looking to increase your income? If your property isn’t generating enough revenue, Bigfoot Hospitality can help transform it into a profitable venture. We specialize in turning properties like villas, farmhouses, and barns into successful rental businesses.
+          Are you a property owner looking to increase your income? If your property isn’t generating enough revenue, Prospera Hospitality can help transform it into a profitable venture. We specialize in turning properties like villas, farmhouses, and barns into successful rental businesses.
           </p>
         </div>
       </div>
