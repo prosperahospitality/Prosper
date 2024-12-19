@@ -1,0 +1,47 @@
+/* Define the animation for sliding from left with elastic effect */
+@keyframes slideInElastic {
+    0% {
+        opacity: 0;
+        transform: translateX(-100px); /* Start off-screen to the left */
+    }
+    60% {
+        opacity: 1;
+        transform: translateX(20px); /* Overshoot to create bounce effect */
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0); /* Final position */
+    }
+}
+
+/* Apply the animation to each letter */
+.letter {
+    display: inline-block;
+    opacity: 0;
+    animation: slideInElastic 0.5s ease-out forwards; /* Apply the animation */
+    animation-delay: calc(0.1s * var(--i)); /* Stagger the animation for each letter */
+}
+
+
+
+/* Fade-in effect */
+@keyframes fadeIn {
+    0% {
+        opacity: 0; /* Start invisible */
+    }
+    100% {
+        opacity: 1; /* End fully visible */
+    }
+}
+
+/* Apply the fade-in effect to the description */
+.fade-in {
+    animation: fadeIn 2s ease-out forwards; /* 1s duration, ease-out for smooth fading */
+}
+
+
+@media (max-width: 768px) {
+    .fade-in {
+        animation-duration: 2s; /* Slightly slower fade-in for smaller screens */
+    }
+}

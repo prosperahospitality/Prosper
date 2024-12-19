@@ -4,16 +4,17 @@ import Link from 'next/link';
 import { Button } from '@nextui-org/react';
 import IMAGES from '@/public';
 import Image from 'next/image';
+import "@/styles/landing.css"
 
 const Landing = (props) => {
     return (
         <div className="relative w-full h-[45rem] md:h-full flex justify-center items-center">
             {/* Background Image */}
-            <Image 
-                src={IMAGES.landingBg} 
-                alt="landing-bg" 
-                fill 
-                className="w-full h-full object-cover opacity-40" 
+            <Image
+                src={IMAGES.landingBg}
+                alt="landing-bg"
+                fill
+                className="w-full h-full object-cover opacity-40"
             />
 
             {/* Content Section */}
@@ -24,16 +25,26 @@ const Landing = (props) => {
                         <div key={i} className="flex flex-col gap-6 md:gap-8 lg:gap-10 justify-start lg:justify-center items-center">
                             {/* Title */}
                             <div className="w-full flex justify-start lg:justify-center items-center">
-                                <h1 className="text-start lg:text-center text-5xl md:text-6xl lg:text-8xl text-[#800000] font-bold w-[95%] md:w-[80%] lg:w-[90%]">
-                                    {e.title}
+                                <h1 className="text-start lg:text-center text-3xl md:text-6xl lg:text-8xl text-[#800000] font-bold w-[95%] md:w-[80%] lg:w-[90%]">
+                                    {e.title.split("").map((char, index) => (
+                                        <span
+                                            key={index}
+                                            className="letter inline-block"
+                                            style={{ '--i': index }} // Set the animation delay for each letter
+                                        >
+                                            {char === " " ? "\u00A0" : char}
+                                        </span>
+                                    ))}
+
                                 </h1>
                             </div>
                             {/* Description */}
                             <div className="flex justify-start lg:justify-center items-center">
-                                <p className="w-full lg:w-[70%] md:w-[80%] text-start lg:text-center text-md md:text-lg lg:text-lg text-gray-500 font-medium">
+                                <p className="w-full lg:w-[70%] md:w-[80%] text-start lg:text-center text-md md:text-lg lg:text-lg text-gray-500 font-medium fade-in">
                                     {e.description}
                                 </p>
                             </div>
+
                             {/* Button for smaller devices */}
                             <Link href="contact-us" className="w-full flex lg:hidden">
                                 <Button radius="full" className="bg-[#800000] text-white font-semibold px-4">

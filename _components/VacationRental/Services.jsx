@@ -91,7 +91,7 @@ const Services = () => {
                     <h1 className="text-3xl sm:text-4xl font-bold text-[#800000]">
                         Our Servies Includes
                     </h1>
-                    <div className="grid grid-cols-3 gap-11 mt-16">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-11 mt-16">
 
                         {services && services.map((e, i) => (
                             <div key={e.id || i} className='border p-6 rounded-xl border-gray-300 bg-white hover:shadow-[rgba(0,0,0,0.15)_1.95px_1.95px_2.6px] hover:scale-105 transition-transform duration-300'>
