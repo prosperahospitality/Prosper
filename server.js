@@ -28,6 +28,7 @@ app.prepare().then(() => {
       methods: ['GET', 'POST'],
       credentials: true,  // Allow credentials (cookies, authorization headers, etc.)
     },
+    path: '/socket.io',
   });
 
   // Socket.io connection handler
