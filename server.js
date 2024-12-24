@@ -24,7 +24,7 @@ app.prepare().then(() => {
 
   const io = new Server(httpServer, {
     cors: {
-      origin: '*', 
+      origin: 'https://prosperaahospitality.com/', 
       methods: ['GET', 'POST'],
       credentials: true,
     },
