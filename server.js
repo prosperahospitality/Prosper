@@ -10,7 +10,7 @@ const dev = process.env.NODE_ENV !== "production";
 const hostname = 'prosperaahospitality.com';
 const port = 443;
 // when using middleware `hostname` and `port` must be provided below
-const app = next({ dev, hostname, port });
+const app = next({ dev, hostname });
 const handler = app.getRequestHandler();
 
 let connectedClients = new Set();
