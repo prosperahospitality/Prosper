@@ -8,7 +8,7 @@ import Link from 'next/link';
 import { button as buttonStyles } from "@nextui-org/theme";
 import { Search, KeyRound, Settings, Power, Mail, MessageCircleMore, MessageCircleQuestion } from 'lucide-react'
 import { RxExternalLink } from "react-icons/rx";
-import { SessionProvider, useSession, getSession, signIn, signOut } from 'next-auth/react'
+// import { SessionProvider, useSession, getSession, signIn, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation';
 import { usePathname } from 'next/navigation';
 
@@ -19,14 +19,14 @@ const CompanyTopBar = () => {
   const [isInvisible, setIsInvisible] = React.useState(false);
   const pathname = usePathname()
   let router = useRouter();
-  useEffect(() => {
+  // useEffect(() => {
   
-    const getSessionInfo = async () => {
-      const session = await getSession();
-      setSession(session);
-    };
-    getSessionInfo();
-  }, [])
+  //   const getSessionInfo = async () => {
+  //     const session = await getSession();
+  //     setSession(session);
+  //   };
+  //   getSessionInfo();
+  // }, [])
 
   // useEffect(() => {
   //   console.log("Session at top company bar:",session)
@@ -111,7 +111,7 @@ const CompanyTopBar = () => {
         </Link>
 
         <Button variant='shadow' color="danger" size='sm' className='left-16 mt-3' startContent={<Power />} onClick={async (e) => {try {
-    await signOut({ redirect: false });
+    // await signOut({ redirect: false });
     // setSession(null);
     router.push('/adminlogin');
   } catch (error) {

@@ -4,7 +4,7 @@ import Image from 'next/image';
 import IMAGES from '@/public/index';
 import { Input, Autocomplete, AutocompleteItem, Button, Checkbox } from "@nextui-org/react";
 import { EyeSlashFilledIcon, EyeFilledIcon, CompanyLogiLogo } from '@/_components/Icons'
-import { SessionProvider, useSession, getSession, signIn, signOut } from 'next-auth/react'
+// import { SessionProvider, useSession, getSession, signIn, signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation';
 import { siteConfig } from "@/config/siteconfig"
 
@@ -22,13 +22,13 @@ const AdminloginPage = () => {
   const [hotelID, setHotelID] = useState();
 
   const [session, setSession] = useState({});
-  useEffect(() => {
-    const getSessionInfo = async () => {
-      const session = await getSession();
-      setSession(session);
-    };
-    getSessionInfo();
-  }, [])
+  // useEffect(() => {
+  //   const getSessionInfo = async () => {
+  //     const session = await getSession();
+  //     setSession(session);
+  //   };
+  //   getSessionInfo();
+  // }, [])
 
   useEffect(() => {
     console.log("Session at admin page: ", session)
@@ -36,38 +36,38 @@ const AdminloginPage = () => {
 
   const handleLoginAction = async () => {
 
-    const result = await signIn("credentials", {
+    // const result = await signIn("credentials", {
 
-      userID: userID,
+    //   userID: userID,
 
-      password: password,
+    //   password: password,
 
-      user_role: 'admin',
+    //   user_role: 'admin',
 
-      redirect: false,
+    //   redirect: false,
 
-      // callbackUrl: "/admin/dashboard",
+    //   // callbackUrl: "/admin/dashboard",
 
-      // session: { favorites: ["item1", "item2"] }
+    //   // session: { favorites: ["item1", "item2"] }
 
-    }).catch((error) => {
+    // }).catch((error) => {
 
-    });
+    // });
 
-    console.log("ABC:::::::>", result)
+    // console.log("ABC:::::::>", result)
 
-    if (result.ok === true) {
+    // if (result.ok === true) {
 
-      alert("Login Success!")
+    //   alert("Login Success!")
 
-      router.push(encodeURI(`/admin/blog`))
+    //   router.push(encodeURI(`/admin/blog`))
 
-    } else if (result.ok === false) {
-      alert("Username or password is incorrect!")
-      //window.location.reload()
-    }
+    // } else if (result.ok === false) {
+    //   alert("Username or password is incorrect!")
+    //   //window.location.reload()
+    // }
 
-    console.log("Result::::>", result)
+    // console.log("Result::::>", result)
 
 
 
