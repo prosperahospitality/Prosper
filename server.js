@@ -21,14 +21,13 @@ app.prepare().then(() => {
     handler(req, res);
   });
 
-  // Initialize socket.io server
+
   const io = new Server(httpServer, {
     cors: {
       origin: '*', 
       methods: ['GET', 'POST'],
       credentials: true,
     },
-    path: '/socket.io',
   });
 
   // Socket.io connection handler
@@ -81,6 +80,13 @@ app.prepare().then(() => {
       socket.emit("test messagee", "You are now the Master!");
       socket.emit("master id", masterId);
       updateConnectedClients(); // Update the list to reflect the new master
+    });
+
+    io.engine.on("connection_error", (err) => {
+      console.log(err.req);      // the request object
+      console.log(err.code);     // the error code, for example 1
+      console.log(err.message);  // the error message, for example "Session ID unknown"
+      console.log(err.context);  // some additional error context
     });
 
     // Handle disconnection
