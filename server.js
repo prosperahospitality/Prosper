@@ -24,9 +24,9 @@ app.prepare().then(() => {
   // Initialize socket.io server
   const io = new Server(httpServer, {
     cors: {
-      origin: 'https://prosperaahospitality.com', // Allow connections from your production domain
+      origin: '*', 
       methods: ['GET', 'POST'],
-      credentials: true,  // Allow credentials (cookies, authorization headers, etc.)
+      credentials: true,
     },
     path: '/socket.io',
   });
