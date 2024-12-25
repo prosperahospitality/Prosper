@@ -55,7 +55,6 @@ const IMAGES = {
     global: '/img/global.avif',
     testimonialsbg: '/img/testimonialsbg.jpg',
     Adminloginbg:'/img/Adminloginbg.jpg',
-    Whatsappwal: '/img/whatsappwal.jpg',
 }
 
 export default IMAGES;

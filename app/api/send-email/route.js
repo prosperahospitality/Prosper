@@ -161,22 +161,5 @@ export async function POST(request) {
     } catch (error) {
       return NextResponse.json({ success: true, message: 'Error sending email or saving enquiry' }, { status: 500 });
     }
-  } else if (payload.operation === "notifyOnline") {
-    try {
-
-      await transporter.sendMail({
-        from: process.env.EMAIL_USER,
-        to: process.env.EMAIL_USER,
-        subject: 'You received an message in the chat',
-        html: `
-          <h2>You have a new message in the chat!</h2>
-        `,
-      });
-
-      return NextResponse.json({ status: 200, message: "Notification Sent" });
-
-    } catch (error) {
-      return NextResponse.json({ success: true, message: 'Error sending notification' }, { status: 500 });
-    }
   }
 }
