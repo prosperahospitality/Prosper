@@ -2,9 +2,11 @@ import { createServer } from "node:http";
 import next from "next";
 import { Server } from "socket.io";
 
-const dev = "production";
+// const dev = "development";
 // const hostname = "localhost";
 // const port = 3000;
+
+const dev = "production";
 const hostname = 'prosperaahospitality.com';
 const port = 443;
 
@@ -22,7 +24,14 @@ app.prepare().then(() => {
   });
 
 
-  const io = new Server(httpServer);
+  const io = new Server(httpServer, {
+    cors: {
+      origin: "https://www.prosperaahospitality.com/", // Replace with your client URL
+      methods: ["GET", "POST"],
+      allowedHeaders: ["my-custom-header"],
+      credentials: true, // Set to true if you need to allow credentials like cookies
+    },
+  });
 
   // Socket.io connection handler
   io.on("connection", (socket) => {
