@@ -5,8 +5,8 @@ import { Server } from "socket.io";
 const dev = "production";
 // const hostname = "localhost";
 // const port = 3000;
-const hostname = 'prosperaahospitality.com';  // Your production hostname
-const port = 443; // Production HTTPS port
+const hostname = 'prosperaahospitality.com';
+const port = 443;
 
 // Initialize Next.js app
 const app = next({ dev, hostname });
@@ -22,14 +22,7 @@ app.prepare().then(() => {
   });
 
 
-  const io = new Server(httpServer, {
-    cors: {
-      origin: "https://www.prosperaahospitality.com", // Client origin (match exactly)
-      methods: ["GET", "POST"], // Allow specific methods
-      allowedHeaders: ["my-custom-header"], // Allow custom headers
-      credentials: true, // Allow credentials (cookies, auth headers)
-    },
-  });
+  const io = new Server(httpServer);
 
   // Socket.io connection handler
   io.on("connection", (socket) => {
