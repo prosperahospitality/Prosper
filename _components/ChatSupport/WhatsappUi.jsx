@@ -82,11 +82,11 @@ const Chat = ({ isOpen, onClose, uniqueId }) => {
   }, [selectedServices])
 
   useEffect(() => {
-    console.log("Messages:::::::::>", messages)
-    if (messages.length > 1) {
+    console.log("Messages:::::::::>", messages, messages.filter((item) => item.senderId === 'jvPXRzyOjSgnPERAa123' && item.receipientId === uniqueId ))
+    if (messages.length > 1 && (messages.filter((item) => item.senderId === 'jvPXRzyOjSgnPERAa123' && item.receipientId === uniqueId ).length > 0)) {
       setCwe(false);
     }
-  }, [messages])
+  }, [messages, selectedServices, uniqueId])
 
 
   const getDbData = () => {
@@ -102,25 +102,105 @@ const Chat = ({ isOpen, onClose, uniqueId }) => {
     return () => unsubscribe();
   }
 
-  const deleteMessages = async () => {
-    try {
-      const chatCollection = collection(database, "chats");
-      const q = query(chatCollection, where("senderId", "==", uniqueId));
-      const querySnapshot = await getDocs(q);
+  // const deleteMessages = async (uniqueId) => {
+  //   try {
+  //     const chatCollection = collection(database, "chats");
+  //     const q = query(chatCollection, where("senderId", "==", uniqueId));
+  //     const querySnapshot = await getDocs(q);
 
-      querySnapshot.forEach(async (doc) => {
-        await deleteDoc(doc.ref);
-      });
+  //     querySnapshot.forEach(async (doc) => {
+  //       await deleteDoc(doc.ref);
+  //     });
 
-      console.log("Messages deleted successfully.");
-    } catch (error) {
-      console.error("Error deleting documents: ", error);
+  //     console.log("Messages deleted successfully.");
+  //   } catch (error) {
+  //     console.error("Error deleting documents: ", error);
+  //   }
+  // };
+
+  const abc = async () => {
+    const response = await fetch('/api/send-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        operation: "notifyOnline",
+        mySenderId: uniqueId,
+        msg: message
+      }),
+    });
+  }
+
+  const markPendingDeletion = (uniqueId) => {
+    // Retrieve the current list of pending deletions
+    const pendingDeletion = JSON.parse(localStorage.getItem("pendingDeletion")) || [];
+  
+    // Add the uniqueId to the list if it's not already present
+    if (!pendingDeletion.includes(uniqueId)) {
+      pendingDeletion.push(uniqueId);
+      localStorage.setItem("pendingDeletion", JSON.stringify(pendingDeletion));
+      console.log(`Marked ${uniqueId} for deletion.`);
     }
   };
 
+  const handleTabClose = () => {
+
+    markPendingDeletion(uniqueId);
+    console.log(`Tab close triggered. Marked ${uniqueId} for deletion.`);
+  };
+
+  const processPendingDeletions = async () => {
+    try {
+      // Retrieve the list of pending deletions
+      const pendingDeletion = JSON.parse(localStorage.getItem("pendingDeletion")) || [];
+  
+      for (const id of pendingDeletion) {
+        console.log(`Processing deletion for ${id}...`);
+  
+        const chatCollection = collection(database, "chats");
+  
+        // Query for senderId === id
+        const senderQuery = query(chatCollection, where("senderId", "==", id));
+        const senderSnapshot = await getDocs(senderQuery);
+  
+        // Query for recipientId === id
+        const recipientQuery = query(chatCollection, where("receipientId", "==", id));
+        const recipientSnapshot = await getDocs(recipientQuery);
+  
+        // Combine both queries' results
+        const allDocs = [...senderSnapshot.docs, ...recipientSnapshot.docs];
+  
+        // Perform deletion for all matching documents
+        const deletePromises = allDocs.map((doc) => deleteDoc(doc.ref));
+        await Promise.all(deletePromises);
+  
+        console.log(`Messages for ${id} deleted successfully.`);
+      }
+  
+      // Clear the pending deletions after processing
+      localStorage.removeItem("pendingDeletion");
+    } catch (error) {
+      console.error("Error processing pending deletions: ", error);
+    }
+  };
+  
+
+
   useEffect(() => {
+
+    processPendingDeletions()
+
     getDbData()
+
+    // abc()
+
+    window.addEventListener("beforeunload", handleTabClose);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleTabClose);
+    };
   }, []);
+
+
 
   return (
     <>

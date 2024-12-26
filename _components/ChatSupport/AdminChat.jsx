@@ -24,7 +24,7 @@ import {
   CheckCheck,
   UserRoundPen,
 } from "lucide-react";
-import { collection, addDoc, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, query, orderBy, onSnapshot, deleteDoc, getDocs, where } from 'firebase/firestore';
 import { database } from '@/app/config';
 
 export default function ChatApp() {
@@ -39,6 +39,41 @@ export default function ChatApp() {
   const [mySenderId, setMySenderId] = useState("jvPXRzyOjSgnPERAa123");
   const [connectedClients, setConnectedClients] = useState([]);
 
+
+  const processPendingDeletions = async () => {
+    try {
+      // Retrieve the list of pending deletions
+      const pendingDeletion = JSON.parse(localStorage.getItem("pendingDeletion")) || [];
+
+      for (const id of pendingDeletion) {
+        console.log(`Processing deletion for ${id}...`);
+
+        const chatCollection = collection(database, "chats");
+
+        // Query for senderId === id
+        const senderQuery = query(chatCollection, where("senderId", "==", id));
+        const senderSnapshot = await getDocs(senderQuery);
+
+        // Query for recipientId === id
+        const recipientQuery = query(chatCollection, where("receipientId", "==", id));
+        const recipientSnapshot = await getDocs(recipientQuery);
+
+        // Combine both queries' results
+        const allDocs = [...senderSnapshot.docs, ...recipientSnapshot.docs];
+
+        // Perform deletion for all matching documents
+        const deletePromises = allDocs.map((doc) => deleteDoc(doc.ref));
+        await Promise.all(deletePromises);
+
+        console.log(`Messages for ${id} deleted successfully.`);
+      }
+
+      // Clear the pending deletions after processing
+      localStorage.removeItem("pendingDeletion");
+    } catch (error) {
+      console.error("Error processing pending deletions: ", error);
+    }
+  };
 
 
   const getDbData = () => {
@@ -55,6 +90,7 @@ export default function ChatApp() {
   }
 
   useEffect(() => {
+    processPendingDeletions()
     getDbData()
   }, []);
 
@@ -73,6 +109,7 @@ export default function ChatApp() {
           console.error("Error adding document: ", error);
         });
 
+      processPendingDeletions()
       getDbData()
 
       setMessage("");
@@ -297,23 +334,27 @@ export default function ChatApp() {
                     return (
                       <li
                         key={index}
-                        className={`relative shadow-md max-w-max px-4 py-2 ${msg.senderId !== mySenderId
-                          ? "bg-blue-500 text-white self-start"
-                          : "bg-gray-200 text-black self-end"
-                          }`}
-                        style={
-                          index % 2 === 0
-                            ? {
-                              borderTopLeftRadius: "12px",
-                              borderBottomLeftRadius: "12px",
-                            }
-                            : {
-                              borderTopRightRadius: "12px",
-                              borderBottomRightRadius: "12px",
-                            }
-                        }
+                        className={`relative shadow-md max-w-max px-4 py-2 ${msg.senderId !== mySenderId ? 'bg-blue-500 text-white self-start' : 'bg-gray-200 text-black self-end'}`}
+                        style={{
+                          borderRadius: '7px 7px 7px 7px'
+                        }}
                       >
                         {msg.message}
+                        {msg.senderId !== mySenderId ? (
+                          <span
+                            className="absolute top-0 left-[-8px] h-[12px] w-[12px] bg-blue-500"
+                            style={{
+                              rotate: '90deg',
+                              clipPath: 'polygon(0 0, 100% 0, 0 100%)',
+                            }} />
+                        ) : (
+                          <span
+                            className="absolute top-0 right-[-8px] h-[12px] w-[12px] bg-gray-200"
+                            style={{
+                              rotate: '-90deg',
+                              clipPath: 'polygon(0 0, 100% 0, 100% 100%)',
+                            }} />
+                        )}
                       </li>
                     );
                   }
