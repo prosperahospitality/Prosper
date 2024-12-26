@@ -151,7 +151,9 @@ const Chat = ({ isOpen, onClose, uniqueId }) => {
   const processPendingDeletions = async () => {
     try {
       // Retrieve the list of pending deletions
-      const pendingDeletion = JSON.parse(localStorage.getItem("pendingDeletion")) || [];
+      const pendingDeletion = (JSON.parse(localStorage.getItem("pendingDeletion")) || []).filter(
+        (id) => id && id.trim() !== ""
+      );
   
       for (const id of pendingDeletion) {
         console.log(`Processing deletion for ${id}...`);
