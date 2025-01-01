@@ -36,41 +36,77 @@ const AdminloginPage = () => {
 
   const handleLoginAction = async () => {
 
-    const result = await signIn("credentials", {
+    if(userID === "Staff") {
 
-      userID: userID,
+      const result = await signIn("credentials", {
 
-      password: password,
+        userID: userID,
+  
+        password: password,
+  
+        user_role: 'staff',
+  
+        redirect: false,
+  
+        // callbackUrl: "/admin/dashboard",
+  
+        // session: { favorites: ["item1", "item2"] }
+  
+      }).catch((error) => {
+  
+      });
+  
+      console.log("ABC:::::::>", result)
+  
+      if (result.ok === true) {
+  
+        alert("Login Success!")
+  
+        router.push(encodeURI(`/employee/dashboard`))
+  
+      } else if (result.ok === false) {
+        alert("Username or password is incorrect!")
+        //window.location.reload()
+      }
+  
+      console.log("Result::::>", result)
 
-      user_role: 'admin',
+    }else {
 
-      redirect: false,
+      const result = await signIn("credentials", {
 
-      // callbackUrl: "/admin/dashboard",
+        userID: userID,
+  
+        password: password,
+  
+        user_role: 'admin',
+  
+        redirect: false,
+  
+        // callbackUrl: "/admin/dashboard",
+  
+        // session: { favorites: ["item1", "item2"] }
+  
+      }).catch((error) => {
+  
+      });
+  
+      console.log("ABC:::::::>", result)
+  
+      if (result.ok === true) {
+  
+        alert("Login Success!")
+  
+        router.push(encodeURI(`/admin/blog`))
+  
+      } else if (result.ok === false) {
+        alert("Username or password is incorrect!")
+        //window.location.reload()
+      }
+  
+      console.log("Result::::>", result)
 
-      // session: { favorites: ["item1", "item2"] }
-
-    }).catch((error) => {
-
-    });
-
-    console.log("ABC:::::::>", result)
-
-    if (result.ok === true) {
-
-      alert("Login Success!")
-
-      router.push(encodeURI(`/admin/blog`))
-
-    } else if (result.ok === false) {
-      alert("Username or password is incorrect!")
-      //window.location.reload()
     }
-
-    console.log("Result::::>", result)
-
-
-
 
   }
 

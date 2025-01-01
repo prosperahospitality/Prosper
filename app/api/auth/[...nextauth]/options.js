@@ -62,6 +62,45 @@ export const options = {
 
           }
 
+          if (credentials.user_role === "staff") {
+
+            const res = await fetch(BASE_URL + "api/userApi/findUser", {
+              method: 'POST',
+              body: JSON.stringify({ "userID": credentials.userID, "user_role": "staff" }),
+              headers: { "Content-Type": "application/json" }
+            })
+            const use = await res.json()
+            let user = use.result;
+
+            console.log("User: ", user);
+
+            if (res.ok && user) {
+              if (user) {
+
+                const dbuserID = user.user_id;
+                const dbpassword = user.hashPassword;
+
+                const match = await bcrypt.compare(credentials.password, dbpassword);
+
+                console.log("Match::::", match);
+
+                if (match) {
+                  console.log("Good Pass: ", user);
+                  if (Object.keys(user).length > 0) {
+                    user = { ...user, password: credentials.password };
+                    return user
+                  } else {
+                    return null;
+                  }
+
+                } else {
+                  return null;
+                }
+              };
+            }
+
+          }
+
 
 
         } 
