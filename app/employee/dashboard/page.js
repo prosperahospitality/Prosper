@@ -211,52 +211,83 @@ const EmployeePage = () => {
 
   const initialFxn = async () => {
     try {
-      let url =
-        "https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn";
-      if (page === "checkin") {
-        // Default URL is already set for "checkin"
+
+      console.log("PAge:::::::>", page)
+
+      if (page === "checkin" || page === "" || page === null) {
+        let url =
+          "https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn";
+        const response = await fetch(url);
+        const json = await response.json();
+
+
+        setUsers(json.checkIn);
+
+        const uniqueColumns = Object.keys(json.checkIn[0]).map((key) => {
+          return { name: formatKeyToTitle(key), uid: key, sortable: true };
+        });
+        uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+        console.log("Sheet 1: ", json.checkIn, uniqueColumns);
+        setColumns(uniqueColumns);
+
       } else if (page === "refunded") {
-        url =
+        let url =
           "https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/refunded";
+
+        const response = await fetch(url);
+        const json = await response.json();
+
+        setUsers(json.refunded);
+
+        const uniqueColumns = Object.keys(json.refunded[0]).map((key) => {
+          return { name: formatKeyToTitle(key), uid: key, sortable: true };
+        });
+        uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+        console.log("Sheet 1: ", json.refunded, uniqueColumns);
+        setColumns(uniqueColumns);
+
       } else if (page === "advanced") {
-        url =
+        let url =
           "https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/advancedReceived";
+
+        const response = await fetch(url);
+        const json = await response.json();
+
+        setUsers(json.advancedReceived);
+
+        const uniqueColumns = Object.keys(json.advancedReceived[0]).map((key) => {
+          return { name: formatKeyToTitle(key), uid: key, sortable: true };
+        });
+        uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+        console.log("Sheet 1: ", json.advancedReceived, uniqueColumns);
+        setColumns(uniqueColumns);
       }
-  
-      const response = await fetch(url);
-      const json = await response.json();
-  
-      // Update state with data
-      setUsers(json.checkIn);
-  
-      const uniqueColumns = Object.keys(json.checkIn[0]).map((key) => {
-        return { name: formatKeyToTitle(key), uid: key, sortable: true };
-      });
-      uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
-  
-      console.log("Sheet 1: ", json.checkIn, uniqueColumns);
-      setColumns(uniqueColumns);
+
+
     } catch (error) {
       console.error("Error::::::>", error);
     } finally {
       setIsLoading(false);
     }
   };
-  
+
   // First useEffect: Initialize data
   useEffect(() => {
     setIsClient(true);
     initialFxn();
   }, []);
-  
+
   // Second useEffect: Log state changes
   useEffect(() => {
     if (users.length > 0 && columns.length > 0) {
       console.log("ABC:::::>", users, columns);
     }
   }, [users, columns]);
-  
-  
+
+
 
   return (
     <>
@@ -291,7 +322,7 @@ const EmployeePage = () => {
             </ModalContent>
           </Modal>
           <div className="lg:ml-2 lg:mr-2">
-            <NewDataTable users={users} columns={columns} pagee={page} />
+            <NewDataTable userss={users} columns={columns} pagee={page} />
           </div>
         </>
       )}

@@ -22,7 +22,7 @@ import {
   useDisclosure,
   ModalFooter,
 } from "@nextui-org/react";
-import { Plus, Pencil } from "lucide-react"
+import { Plus, Pencil, Trash2, Info } from "lucide-react"
 import Swal from 'sweetalert2';
 
 const statusOptions = [
@@ -100,9 +100,11 @@ function capitalize(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export default function NewDataTable({ users, columns, pagee }) {
-  console.log("Data:::::>", users, columns, pagee)
+export default function NewDataTable({ userss, columns, pagee }) {
+  console.log("Data:::::>", userss, columns, pagee)
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+
+  const [users, setUsers] = React.useState(userss);
 
 
   const [bookingID, setBookingID] = React.useState("");
@@ -129,6 +131,69 @@ export default function NewDataTable({ users, columns, pagee }) {
   const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
+
+  const fetchData = async () => {
+    let urll;
+
+    if (pagee === "checkin" || pagee === "" || pagee === null) {
+
+      urll = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn';
+
+      try {
+        const response = await fetch(urll);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const json = await response.json();
+
+        console.log("ABCD:::::>", json.checkIn)
+
+        setUsers(json.checkIn)
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        // setLoading(false);
+      }
+
+    } else if (pagee === "refunded") {
+
+      urll = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/refunded';
+
+      try {
+        const response = await fetch(urll);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const json = await response.json();
+
+        setUsers(json.refunded)
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        // setLoading(false);
+      }
+
+    } else if (pagee === "advanced") {
+
+      urll = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/advancedReceived';
+
+      try {
+        const response = await fetch(urll);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const json = await response.json();
+        setUsers(json.advancedReceived)
+      } catch (error) {
+        console.log(error.message);
+      } finally {
+        // setLoading(false);
+      }
+
+    }
+
+
+  };
 
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
@@ -226,9 +291,12 @@ export default function NewDataTable({ users, columns, pagee }) {
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2 z-10">
-            <button onClick={(e) => handleInfo(user.reservationNumber, "edit")}><Pencil className="size-5" /></button>
+            <button onClick={(e) => handleInfo(user.id, "edit")}><Pencil className="size-5" /></button>
             <button onClick={(e) => handleInfo(user.reservationNumber, "view")}>
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-info"><circle cx="12" cy="12" r="10" /><path d="M12 16v-4" /><path d="M12 8h.01" /></svg>
+              <Info className="size-5" />
+            </button>
+            <button onClick={(e) => handleInfo(user.id, "delete")}>
+              <Trash2 className="size-5" />
             </button>
           </div>
         );
@@ -386,6 +454,21 @@ export default function NewDataTable({ users, columns, pagee }) {
     );
   }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
 
+  const handleDelete = async (id) => {
+    let url = `https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn/${id}`;
+    fetch(url, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }).then(() => {
+      console.log('Object deleted');
+      window.location.reload();
+    });
+    // .then((response) => response.json())
+
+  }
+
   const handleInfo = (id, action) => {
 
     if (action === "view") {
@@ -407,11 +490,31 @@ export default function NewDataTable({ users, columns, pagee }) {
       setActionClicked("edit")
       setBookingID(id)
       if (id) {
-        setSelectedRowData(filteredItems.find((item) => item.reservationNumber === id))
+        setSelectedRowData(filteredItems.find((item) => item.id === id))
       } else {
         setSelectedRowData({})
       }
       onOpen()
+    } else if (action === "delete") {
+      setBookingID(id)
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          handleDelete(id)
+          Swal.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+          });
+        }
+      });
     }
 
   }
@@ -493,7 +596,7 @@ export default function NewDataTable({ users, columns, pagee }) {
       .join(' '); // Join the array back into a string
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e, operation) => {
     e.preventDefault()
     console.log("Submit:::::::>", columns, e.target.serialNo.value)
 
@@ -512,7 +615,12 @@ export default function NewDataTable({ users, columns, pagee }) {
         return acc;
       }, {});
 
-      url = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn';
+
+      if (operation === "add") {
+        url = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn';
+      } else if (operation === "edit") {
+        url = `https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn/${bookingID}`;
+      }
       body = {
         checkIn
       }
@@ -528,7 +636,11 @@ export default function NewDataTable({ users, columns, pagee }) {
         return acc;
       }, {});
 
-      url = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/refunded';
+      if (operation === "add") {
+        url = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/refunded';
+      } else if (operation === "edit") {
+        url = `https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/refunded/${bookingID}`;
+      }
       body = {
         refunded
       }
@@ -544,7 +656,11 @@ export default function NewDataTable({ users, columns, pagee }) {
         return acc;
       }, {});
 
-      url = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/advancedReceived';
+      if (operation === "add") {
+        url = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/advancedReceived';
+      } else if (operation === "edit") {
+        url = `https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/advancedReceived/${bookingID}`;
+      }
       body = {
         advancedReceived
       }
@@ -560,45 +676,83 @@ export default function NewDataTable({ users, columns, pagee }) {
         return acc;
       }, {});
 
-      url = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn';
+      if (operation === "add") {
+        url = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn';
+      } else if (operation === "edit") {
+        url = `https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn/${bookingID}`;
+      }
       body = {
         checkIn
       }
     }
 
 
+    console.log("Payload:::::::>", JSON.stringify(body), operation, bookingID, url);
 
 
-    console.log("Payload:::::::>", JSON.stringify(body));
-    fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    })
-      .then((response) => response.json())
-      .then(json => {
+    if (operation === "add") {
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+        .then((response) => response.json())
+        .then(json => {
 
-        console.log(json.checkIn);
+          Swal.fire({
 
-        Swal.fire({
+            title: "Added",
 
-          title: "Added",
+            text: "Data Added to Excel!",
 
-          text: "Data Added to Excel!",
+            icon: "success"
 
-          icon: "success"
+          }).then((result) => {
 
-        }).then((result) => {
+            onClose()
 
-          onClose()
+            window.location.reload()
 
-          window.location.reload()
+          });
 
         });
+    } else if (operation === "edit") {
+      fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(body)
+      })
+        .then((response) => response.json())
+        .then(json => {
 
-      });
+          console.log(json.checkIn);
+
+          Swal.fire({
+
+            title: "Updated",
+
+            text: "Data Updated for Selected Row!",
+
+            icon: "success"
+
+          }).then((result) => {
+
+            onClose()
+
+            window.location.reload()
+
+            // fetchData()
+
+          });
+
+        });
+    }
+
+
 
 
   }
@@ -661,7 +815,7 @@ export default function NewDataTable({ users, columns, pagee }) {
                 {
                   actionClicked === "add"
                     ?
-                    <form onSubmit={handleSubmit}>
+                    <form onSubmit={(e) => handleSubmit(e, "add")}>
                       <div className="grid grid-cols-2 gap-2 max-h-[32rem] custom-scrollbar">
                         {columns?.map((item, index) => {
 
@@ -701,7 +855,7 @@ export default function NewDataTable({ users, columns, pagee }) {
                           return null; // Ensure no undefined elements are returned
                         })}
                       </div>
-                      : <form onSubmit={handleSubmit}>
+                      : <form onSubmit={(e) => handleSubmit(e, "edit")}>
                         <div className="grid grid-cols-2 gap-2 max-h-[32rem] custom-scrollbar">
                           {columns?.map((item, index) => {
 
