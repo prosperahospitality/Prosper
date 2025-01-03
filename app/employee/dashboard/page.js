@@ -308,6 +308,7 @@ const EmployeePage = () => {
       if (page === "checkin" || page === "" || page === null) {
 
         const params = {
+          limit: 100,
           apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
           spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
         };
@@ -333,6 +334,7 @@ const EmployeePage = () => {
 
       } else if (page === "refunded") {
         const params = {
+          limit: 100,
           apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
           spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
         };
@@ -358,6 +360,7 @@ const EmployeePage = () => {
 
       } else if (page === "advanced") {
         const params = {
+          limit: 100,
           apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
           spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
         };

@@ -132,12 +132,21 @@ export default function NewDataTable({ userss, columns, pagee }) {
 
   const hasSearchFilter = Boolean(filterValue);
 
+  useEffect(() => {
+    console.log("Page:::::>", page)
+
+    if(page === 10) {
+
+    }
+  }, [page])
+  
+
   const fetchData = async () => {
     try {
 
       console.log("PAge:::::::>", page)
 
-      if (page === "checkin" || page === "" || page === null) {
+      if (pagee === "checkin" || pagee === "" || pagee === null) {
 
         const params = {
           apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
@@ -163,7 +172,7 @@ export default function NewDataTable({ userss, columns, pagee }) {
         console.log("Sheet 1: ", data, uniqueColumns);
         // setColumns(uniqueColumns);
 
-      } else if (page === "refunded") {
+      } else if (pagee === "refunded") {
         const params = {
           apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
           spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
@@ -188,7 +197,7 @@ export default function NewDataTable({ userss, columns, pagee }) {
         console.log("Sheet 1: ", data, uniqueColumns);
         // setColumns(uniqueColumns);
 
-      } else if (page === "advanced") {
+      } else if (pagee === "advanced") {
         const params = {
           apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
           spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
@@ -221,6 +230,30 @@ export default function NewDataTable({ userss, columns, pagee }) {
       // setIsLoading(false);
     }
   };
+
+  function convertToCamelCase(data) {
+    return data?.map(item => {
+      const newItem = {};
+      for (const key in item) {
+        if (item.hasOwnProperty(key)) {
+          if (key === "rowIndex") {
+            newItem[key] = item[key];
+          } else {
+            const camelCaseKey = key
+              .replace(/^(.)/, (match, group1) => group1.toUpperCase())
+              .replace(/\s(.)/g, (match, group1) => group1.toLowerCase())
+
+            const camelCaseKeyy = camelCaseKey.split("")
+              .map(char => char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase())
+              .join("");
+
+            newItem[camelCaseKeyy] = item[key];
+          }
+        }
+      }
+      return newItem;
+    });
+  }
 
   const headerColumns = React.useMemo(() => {
     if (visibleColumns === "all") return columns;
@@ -256,9 +289,43 @@ export default function NewDataTable({ userss, columns, pagee }) {
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
+  console.log("Pages New:::::>", pages)
+
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
+
+    console.log("Pages:::::>", pages, page)
+
+    if(pages === page) {
+      const fetchDataa = async() => {
+        if (pagee === "checkin" || pagee === "" || pagee === null) {
+
+          const params = {
+            skip: 100,
+            limit: 100,
+            apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
+            spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
+          };
+          const urll = new URL("https://api.sheetson.com/v2/sheets/Checkin");
+  
+          Object.keys(params).forEach(key => urll.searchParams.append(key, encodeURIComponent(params[key])));
+  
+          urll.searchParams.append('t', new Date().getTime());
+  
+          const responsee = await fetch(urll);
+          const dataa = await responsee.json();
+          const data = convertToCamelCase(dataa.results);
+
+          console.log("ABc::::::::>", data)
+  
+          setUsers(data);
+  
+        }
+      }
+
+      fetchDataa()
+    }
 
     return filteredItems.slice(start, end);
   }, [page, filteredItems, rowsPerPage]);
