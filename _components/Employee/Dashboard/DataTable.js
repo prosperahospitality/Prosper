@@ -242,7 +242,7 @@ export default function NewDataTable({ userss, columns, pagee }) {
 
     if (hasSearchFilter) {
       filteredUsers = filteredUsers.filter((user) =>
-        user.guestname.toLowerCase().includes(filterValue.toLowerCase()),
+        user.guestName.toLowerCase().includes(filterValue.toLowerCase()),
       );
     }
     if (statusFilter !== "all" && Array.from(statusFilter).length !== statusOptions.length) {
