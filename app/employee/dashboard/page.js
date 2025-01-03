@@ -18,18 +18,42 @@ const EmployeePage = () => {
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
 
-  function toCamelCase(str) {
-    const abc = str
-      .replace(/^(.)/, (match, group1) => group1.toUpperCase())
-      .replace(/\s(.)/g, (match, group1) => group1.toLowerCase())
+  // function toCamelCase(str) {
+  //   const abc = str
+  //     .replace(/^(.)/, (match, group1) => group1.toUpperCase())
+  //     .replace(/\s(.)/g, (match, group1) => group1.toLowerCase())
 
-    console.log("columns::::::>", abc.split("")
-      .map(char => char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase())
-      .join(""))
+  //   console.log("columns::::::>", abc.split("")
+  //     .map(char => char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase())
+  //     .join(""))
 
-    return abc.split("")
-      .map(char => char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase())
-      .join("");
+  //   return abc.split("")
+  //     .map(char => char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase())
+  //     .join("");
+  // }
+
+  function convertToCamelCase(data) {
+    return data.map(item => {
+      const newItem = {};
+      for (const key in item) {
+        if (item.hasOwnProperty(key)) {
+          if (key === "rowIndex") {
+            newItem[key] = item[key];
+          } else {
+            const camelCaseKey = key
+              .replace(/^(.)/, (match, group1) => group1.toUpperCase())
+              .replace(/\s(.)/g, (match, group1) => group1.toLowerCase())
+
+            const camelCaseKeyy = camelCaseKey.split("")
+              .map(char => char === char.toUpperCase() ? char.toLowerCase() : char.toUpperCase())
+              .join("");
+
+            newItem[camelCaseKeyy] = item[key];
+          }
+        }
+      }
+      return newItem;
+    });
   }
 
   function formatKeyToTitle(key) {
@@ -209,60 +233,152 @@ const EmployeePage = () => {
   //   }
   // };
 
+  // const initialFxn = async () => {
+  //   try {
+
+  //     console.log("PAge:::::::>", page)
+
+  //     if (page === "checkin" || page === "" || page === null) {
+  //       let url =
+  //         "https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn";
+  //       const response = await fetch(url);
+  //       const json = await response.json();
+
+
+  //       setUsers(json.checkIn);
+
+  //       const uniqueColumns = Object.keys(json.checkIn[0]).map((key) => {
+  //         return { name: formatKeyToTitle(key), uid: key, sortable: true };
+  //       });
+  //       uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+  //       console.log("Sheet 1: ", json.checkIn, uniqueColumns);
+  //       setColumns(uniqueColumns);
+
+  //     } else if (page === "refunded") {
+  //       let url =
+  //         "https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/refunded";
+
+  //       const response = await fetch(url);
+  //       const json = await response.json();
+
+  //       setUsers(json.refunded);
+
+  //       const uniqueColumns = Object.keys(json.refunded[0]).map((key) => {
+  //         return { name: formatKeyToTitle(key), uid: key, sortable: true };
+  //       });
+  //       uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+  //       console.log("Sheet 1: ", json.refunded, uniqueColumns);
+  //       setColumns(uniqueColumns);
+
+  //     } else if (page === "advanced") {
+  //       let url =
+  //         "https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/advancedReceived";
+
+  //       const response = await fetch(url);
+  //       const json = await response.json();
+
+  //       setUsers(json?.advancedReceived);
+
+  //       const uniqueColumns = Object.keys(json?.advancedReceived[0]).map((key) => {
+  //         return { name: formatKeyToTitle(key), uid: key, sortable: true };
+  //       });
+  //       uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+  //       console.log("Sheet 1: ", json.advancedReceived, uniqueColumns);
+  //       setColumns(uniqueColumns);
+  //     }
+
+
+  //   } catch (error) {
+  //     console.error("Error::::::>", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+
+
   const initialFxn = async () => {
     try {
 
       console.log("PAge:::::::>", page)
 
       if (page === "checkin" || page === "" || page === null) {
-        let url =
-          "https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn";
-        const response = await fetch(url);
-        const json = await response.json();
 
+        const params = {
+          apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
+          spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
+        };
+        const urll = new URL("https://api.sheetson.com/v2/sheets/Checkin");
 
-        setUsers(json.checkIn);
+        Object.keys(params).forEach(key => urll.searchParams.append(key, encodeURIComponent(params[key])));
 
-        const uniqueColumns = Object.keys(json.checkIn[0]).map((key) => {
+        urll.searchParams.append('t', new Date().getTime());
+
+        const responsee = await fetch(urll);
+        const dataa = await responsee.json();
+        const data = convertToCamelCase(dataa.results);
+
+        setUsers(data);
+
+        const uniqueColumns = Object.keys(data[0]).map((key) => {
           return { name: formatKeyToTitle(key), uid: key, sortable: true };
         });
         uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
 
-        console.log("Sheet 1: ", json.checkIn, uniqueColumns);
+        console.log("Sheet 1: ", data, uniqueColumns);
         setColumns(uniqueColumns);
 
       } else if (page === "refunded") {
-        let url =
-          "https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/refunded";
+        const params = {
+          apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
+          spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
+        };
+        const urll = new URL("https://api.sheetson.com/v2/sheets/Refunded");
 
-        const response = await fetch(url);
-        const json = await response.json();
+        Object.keys(params).forEach(key => urll.searchParams.append(key, encodeURIComponent(params[key])));
 
-        setUsers(json.refunded);
+        urll.searchParams.append('t', new Date().getTime());
 
-        const uniqueColumns = Object.keys(json.refunded[0]).map((key) => {
+        const responsee = await fetch(urll);
+        const dataa = await responsee.json();
+        const data = convertToCamelCase(dataa.results);
+
+        setUsers(data);
+
+        const uniqueColumns = Object.keys(data[0]).map((key) => {
           return { name: formatKeyToTitle(key), uid: key, sortable: true };
         });
         uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
 
-        console.log("Sheet 1: ", json.refunded, uniqueColumns);
+        console.log("Sheet 1: ", data, uniqueColumns);
         setColumns(uniqueColumns);
 
       } else if (page === "advanced") {
-        let url =
-          "https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/advancedReceived";
+        const params = {
+          apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
+          spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
+        };
+        const urll = new URL("https://api.sheetson.com/v2/sheets/AdvancedReceived");
 
-        const response = await fetch(url);
-        const json = await response.json();
+        Object.keys(params).forEach(key => urll.searchParams.append(key, encodeURIComponent(params[key])));
 
-        setUsers(json.advancedReceived);
+        urll.searchParams.append('t', new Date().getTime());
 
-        const uniqueColumns = Object.keys(json.advancedReceived[0]).map((key) => {
+        const responsee = await fetch(urll);
+        const dataa = await responsee.json();
+        const data = convertToCamelCase(dataa.results);
+
+        setUsers(data);
+
+        const uniqueColumns = Object.keys(data[0]).map((key) => {
           return { name: formatKeyToTitle(key), uid: key, sortable: true };
         });
         uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
 
-        console.log("Sheet 1: ", json.advancedReceived, uniqueColumns);
+        console.log("Sheet 1: ", data, uniqueColumns);
         setColumns(uniqueColumns);
       }
 
@@ -275,6 +391,7 @@ const EmployeePage = () => {
   };
 
   // First useEffect: Initialize data
+
   useEffect(() => {
     setIsClient(true);
     initialFxn();

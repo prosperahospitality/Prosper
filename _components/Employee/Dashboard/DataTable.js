@@ -133,66 +133,93 @@ export default function NewDataTable({ userss, columns, pagee }) {
   const hasSearchFilter = Boolean(filterValue);
 
   const fetchData = async () => {
-    let urll;
+    try {
 
-    if (pagee === "checkin" || pagee === "" || pagee === null) {
+      console.log("PAge:::::::>", page)
 
-      urll = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn';
+      if (page === "checkin" || page === "" || page === null) {
 
-      try {
-        const response = await fetch(urll);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const json = await response.json();
+        const params = {
+          apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
+          spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
+        };
+        const urll = new URL("https://api.sheetson.com/v2/sheets/Checkin");
 
-        console.log("ABCD:::::>", json.checkIn)
+        Object.keys(params).forEach(key => urll.searchParams.append(key, encodeURIComponent(params[key])));
 
-        setUsers(json.checkIn)
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        // setLoading(false);
+        urll.searchParams.append('t', new Date().getTime());
+
+        const responsee = await fetch(urll);
+        const dataa = await responsee.json();
+        const data = convertToCamelCase(dataa.results);
+
+        setUsers(data);
+
+        const uniqueColumns = Object.keys(data[0]).map((key) => {
+          return { name: formatKeyToTitle(key), uid: key, sortable: true };
+        });
+        uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+        console.log("Sheet 1: ", data, uniqueColumns);
+        // setColumns(uniqueColumns);
+
+      } else if (page === "refunded") {
+        const params = {
+          apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
+          spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
+        };
+        const urll = new URL("https://api.sheetson.com/v2/sheets/Refunded");
+
+        Object.keys(params).forEach(key => urll.searchParams.append(key, encodeURIComponent(params[key])));
+
+        urll.searchParams.append('t', new Date().getTime());
+
+        const responsee = await fetch(urll);
+        const dataa = await responsee.json();
+        const data = convertToCamelCase(dataa.results);
+
+        setUsers(data);
+
+        const uniqueColumns = Object.keys(data[0]).map((key) => {
+          return { name: formatKeyToTitle(key), uid: key, sortable: true };
+        });
+        uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+        console.log("Sheet 1: ", data, uniqueColumns);
+        // setColumns(uniqueColumns);
+
+      } else if (page === "advanced") {
+        const params = {
+          apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
+          spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
+        };
+        const urll = new URL("https://api.sheetson.com/v2/sheets/AdvancedReceived");
+
+        Object.keys(params).forEach(key => urll.searchParams.append(key, encodeURIComponent(params[key])));
+
+        urll.searchParams.append('t', new Date().getTime());
+
+        const responsee = await fetch(urll);
+        const dataa = await responsee.json();
+        const data = convertToCamelCase(dataa.results);
+
+        setUsers(data);
+
+        const uniqueColumns = Object.keys(data[0]).map((key) => {
+          return { name: formatKeyToTitle(key), uid: key, sortable: true };
+        });
+        uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+        console.log("Sheet 1: ", data, uniqueColumns);
+        // setColumns(uniqueColumns);
       }
 
-    } else if (pagee === "refunded") {
 
-      urll = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/refunded';
-
-      try {
-        const response = await fetch(urll);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const json = await response.json();
-
-        setUsers(json.refunded)
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        // setLoading(false);
-      }
-
-    } else if (pagee === "advanced") {
-
-      urll = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/advancedReceived';
-
-      try {
-        const response = await fetch(urll);
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        const json = await response.json();
-        setUsers(json.advancedReceived)
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        // setLoading(false);
-      }
-
+    } catch (error) {
+      console.error("Error::::::>", error);
+    } finally {
+      // setIsLoading(false);
     }
-
-
   };
 
   const headerColumns = React.useMemo(() => {
@@ -291,8 +318,8 @@ export default function NewDataTable({ userss, columns, pagee }) {
       case "actions":
         return (
           <div className="relative flex justify-end items-center gap-2 z-10">
-            <button onClick={(e) => handleInfo(user.id, "edit")}><Pencil className="size-5" /></button>
-            <button onClick={(e) => handleInfo(user.reservationNumber, "view")}>
+            <button onClick={(e) => handleInfo(user.rowIndex, "edit")}><Pencil className="size-5" /></button>
+            <button onClick={(e) => handleInfo(user.rowIndex, "view")}>
               <Info className="size-5" />
             </button>
             {/* <button onClick={(e) => handleInfo(user.id, "delete")}>
@@ -473,11 +500,11 @@ export default function NewDataTable({ userss, columns, pagee }) {
 
     if (action === "view") {
 
-      console.log("sheet Id:::::::>", id, filteredItems, filteredItems.find((item) => item.reservationNumber === id))
+      console.log("sheet Id:::::::>", id, filteredItems, filteredItems.find((item) => item.rowIndex === id))
       setActionClicked("view")
       setBookingID(id)
       if (id) {
-        setSelectedRowData(filteredItems.find((item) => item.reservationNumber === id))
+        setSelectedRowData(filteredItems.find((item) => item.rowIndex === id))
       } else {
         setSelectedRowData({})
       }
@@ -490,7 +517,7 @@ export default function NewDataTable({ userss, columns, pagee }) {
       setActionClicked("edit")
       setBookingID(id)
       if (id) {
-        setSelectedRowData(filteredItems.find((item) => item.id === id))
+        setSelectedRowData(filteredItems.find((item) => item.rowIndex === id))
       } else {
         setSelectedRowData({})
       }
@@ -596,6 +623,26 @@ export default function NewDataTable({ userss, columns, pagee }) {
       .join(' '); // Join the array back into a string
   }
 
+  function convertToOriginalCase(data) {
+    const newItem = {};
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        if (key === "rowIndex") {
+          // newItem[key] = data[key];
+        } else {
+          // Convert camelCase key to original format (e.g., "firstName" => "First Name")
+          const originalKey = key.replace(/([a-z])([A-Z])/g, '$1 $2') // Add space before uppercase letters
+            .replace(/^([a-z])/, (match, group1) => group1.toUpperCase()).toUpperCase(); // Capitalize the first letter
+  
+          newItem[originalKey] = data[key];
+        }
+      }
+    }
+    return newItem;
+  }
+  
+  
+
   const handleSubmit = (e, operation) => {
     e.preventDefault()
     console.log("Submit:::::::>", columns, e.target.serialNo.value)
@@ -617,13 +664,11 @@ export default function NewDataTable({ userss, columns, pagee }) {
 
 
       if (operation === "add") {
-        url = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn';
+        url = 'https://api.sheetson.com/v2/sheets/Checkin';
       } else if (operation === "edit") {
-        url = `https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn/${bookingID}`;
+        url = `https://api.sheetson.com/v2/sheets/Checkin/${bookingID}`;
       }
-      body = {
-        checkIn
-      }
+      body = checkIn
 
     } else if (pagee === "refunded") {
 
@@ -637,17 +682,16 @@ export default function NewDataTable({ userss, columns, pagee }) {
       }, {});
 
       if (operation === "add") {
-        url = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/refunded';
+        url = 'https://api.sheetson.com/v2/sheets/Refunded';
       } else if (operation === "edit") {
-        url = `https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/refunded/${bookingID}`;
+        url = `https://api.sheetson.com/v2/sheets/Refunded/${bookingID}`;
       }
-      body = {
-        refunded
-      }
+      body = refunded
+  
 
     } else if (pagee === "advanced") {
 
-      const refunded = columns?.reduce((acc, column) => {
+      const advancedReceived = columns?.reduce((acc, column) => {
         const fieldName = column.uid;
 
         if (fieldName !== "actions") {
@@ -657,13 +701,11 @@ export default function NewDataTable({ userss, columns, pagee }) {
       }, {});
 
       if (operation === "add") {
-        url = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/advancedReceived';
+        url = 'https://api.sheetson.com/v2/sheets/AdvancedReceived';
       } else if (operation === "edit") {
-        url = `https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/advancedReceived/${bookingID}`;
+        url = `https://api.sheetson.com/v2/sheets/AdvancedReceived/${bookingID}`;
       }
-      body = {
-        advancedReceived
-      }
+      body = advancedReceived
 
     } else {
       const checkIn = columns?.reduce((acc, column) => {
@@ -677,13 +719,11 @@ export default function NewDataTable({ userss, columns, pagee }) {
       }, {});
 
       if (operation === "add") {
-        url = 'https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn';
+        url = 'https://api.sheetson.com/v2/sheets/Checkin';
       } else if (operation === "edit") {
-        url = `https://api.sheety.co/25d87b389c572febe4901f70270cfa06/test/checkIn/${bookingID}`;
+        url = `https://api.sheetson.com/v2/sheets/Checkin/${bookingID}`;
       }
-      body = {
-        checkIn
-      }
+      body = checkIn
     }
 
 
@@ -692,13 +732,15 @@ export default function NewDataTable({ userss, columns, pagee }) {
 
     if (operation === "add") {
       fetch(url, {
-        method: 'POST',
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json'
+          "Authorization": "Bearer GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
+          "X-Spreadsheet-Id": "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify(convertToOriginalCase(body))
       })
-        .then((response) => response.json())
+        .then(async (response) => console.log("Add::::>", await response.json()))
         .then(json => {
 
           Swal.fire({
@@ -724,14 +766,16 @@ export default function NewDataTable({ userss, columns, pagee }) {
       fetch(url, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json'
+          "Authorization": "Bearer GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
+          "X-Spreadsheet-Id": "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ",
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify(body)
+        body: JSON.stringify(convertToOriginalCase(body))
       })
         .then((response) => response.json())
         .then(json => {
 
-          console.log(json.checkIn);
+          console.log("Result:::::>", json);
 
           Swal.fire({
 
@@ -744,6 +788,33 @@ export default function NewDataTable({ userss, columns, pagee }) {
           }).then((result) => {
 
             onClose()
+
+            const updateUser = (id, updatedFields) => {
+              setUsers((prevVal) =>
+                prevVal.map((user) =>
+                  user.id === id
+                    ? {
+                        ...user,
+                        ...updatedFields,
+                      }
+                    : user
+                )
+              );
+            };
+
+            // if(pagee === "checkin") {
+
+            //   let updatedFields = json.checkIn;
+
+            // } else if(pagee === "refunded") {
+
+            // } else if(pagee === "advanced") {
+
+            //   let updatedFields = json.advancedReceived;
+
+            //   updateUser(updatedFields.id, updatedFields)
+
+            // }
 
             fetchData()
 
@@ -821,7 +892,7 @@ export default function NewDataTable({ userss, columns, pagee }) {
                       <div className="grid grid-cols-2 gap-2 max-h-[32rem] custom-scrollbar">
                         {columns?.map((item, index) => {
 
-                          if (item.uid === "actions") {
+                          if (item.uid === "actions" || item.uid === "rowIndex") {
 
                           } else {
                             return (
