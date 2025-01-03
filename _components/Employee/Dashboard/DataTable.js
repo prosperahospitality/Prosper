@@ -295,9 +295,9 @@ export default function NewDataTable({ userss, columns, pagee }) {
             <button onClick={(e) => handleInfo(user.reservationNumber, "view")}>
               <Info className="size-5" />
             </button>
-            <button onClick={(e) => handleInfo(user.id, "delete")}>
+            {/* <button onClick={(e) => handleInfo(user.id, "delete")}>
               <Trash2 className="size-5" />
-            </button>
+            </button> */}
           </div>
         );
       default:
@@ -713,6 +713,8 @@ export default function NewDataTable({ userss, columns, pagee }) {
 
             onClose()
 
+            fetchData()
+
             window.location.reload()
 
           });
@@ -743,9 +745,9 @@ export default function NewDataTable({ userss, columns, pagee }) {
 
             onClose()
 
-            window.location.reload()
+            fetchData()
 
-            // fetchData()
+            window.location.reload()
 
           });
 
