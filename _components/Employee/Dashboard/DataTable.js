@@ -106,6 +106,8 @@ export default function NewDataTable({ userss, columns, pagee }) {
 
   const [users, setUsers] = React.useState(userss);
 
+  const tableRef = useRef(null);
+
 
   const [bookingID, setBookingID] = React.useState("");
   const [selectedBooking, setSelectedBooking] = React.useState({});
@@ -116,7 +118,6 @@ export default function NewDataTable({ userss, columns, pagee }) {
   const [inputValue, setInputValue] = React.useState('');
   const [selectedRowData, setSelectedRowData] = React.useState({});
 
-  const [sortedItemsNew, setSortedItemsNew] = React.useState(users);
   const [actionClicked, setActionClicked] = React.useState('');
 
   const [filterValue, setFilterValue] = React.useState("");
@@ -135,11 +136,11 @@ export default function NewDataTable({ userss, columns, pagee }) {
   useEffect(() => {
     console.log("Page:::::>", page)
 
-    if(page === 10) {
+    if (page === 10) {
 
     }
   }, [page])
-  
+
 
   const fetchData = async () => {
     try {
@@ -263,6 +264,12 @@ export default function NewDataTable({ userss, columns, pagee }) {
   }, [visibleColumns]);
 
   const filteredItems = React.useMemo(() => {
+
+    if (!Array.isArray(users)) {
+      console.error("Expected `users` to be an array, but got:", users);
+      return [];
+    }
+
     let filteredUsers = [...users];
 
     filteredUsers = filteredUsers.filter((item) => {
@@ -297,49 +304,20 @@ export default function NewDataTable({ userss, columns, pagee }) {
 
     console.log("Pages:::::>", pages, page)
 
-    if(pages === page) {
-      const fetchDataa = async() => {
-        if (pagee === "checkin" || pagee === "" || pagee === null) {
-
-          const params = {
-            skip: 100,
-            limit: 100,
-            apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
-            spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
-          };
-          const urll = new URL("https://api.sheetson.com/v2/sheets/Checkin");
-  
-          Object.keys(params).forEach(key => urll.searchParams.append(key, encodeURIComponent(params[key])));
-  
-          urll.searchParams.append('t', new Date().getTime());
-  
-          const responsee = await fetch(urll);
-          const dataa = await responsee.json();
-          const data = convertToCamelCase(dataa.results);
-
-          console.log("ABc::::::::>", data)
-  
-          setUsers(data);
-  
-        }
-      }
-
-      fetchDataa()
-    }
-
     return filteredItems.slice(start, end);
   }, [page, filteredItems, rowsPerPage]);
 
   const sortedItems = React.useMemo(() => {
     return [...items].sort((a, b) => {
-      const first = a[sortDescriptor.column];
-      const second = b[sortDescriptor.column];
+      const first = sortDescriptor.column === "serialNo" ? parseInt(a[sortDescriptor.column], 10) : a[sortDescriptor.column];
+      const second = sortDescriptor.column === "serialNo" ? parseInt(b[sortDescriptor.column], 10) : b[sortDescriptor.column];
+  
       const cmp = first < second ? -1 : first > second ? 1 : 0;
-
-      setSortedItemsNew(sortDescriptor.direction === "descending" ? -cmp : cmp)
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
   }, [sortDescriptor, items]);
+  
+
 
   // const sortedItems = React.useMemo(() => {
   //   // Filter the items based on inputValue and headerClicke
@@ -444,7 +422,7 @@ export default function NewDataTable({ userss, columns, pagee }) {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Dropdown>
+            {/* <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
                   Status
@@ -464,7 +442,7 @@ export default function NewDataTable({ userss, columns, pagee }) {
                   </DropdownItem>
                 ))}
               </DropdownMenu>
-            </Dropdown>
+            </Dropdown> */}
             <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button endContent={<ChevronDownIcon className="text-small" />} variant="flat">
@@ -634,8 +612,8 @@ export default function NewDataTable({ userss, columns, pagee }) {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={(e) => e.stopPropagation()}
                 onBlur={(e) => {
-                  e.stopPropagation()
-                  setHeaderClicked('')
+                  // e.stopPropagation()
+                  // setHeaderClicked('')
                 }}
                 autoFocus
               />
@@ -700,15 +678,15 @@ export default function NewDataTable({ userss, columns, pagee }) {
           // Convert camelCase key to original format (e.g., "firstName" => "First Name")
           const originalKey = key.replace(/([a-z])([A-Z])/g, '$1 $2') // Add space before uppercase letters
             .replace(/^([a-z])/, (match, group1) => group1.toUpperCase()).toUpperCase(); // Capitalize the first letter
-  
+
           newItem[originalKey] = data[key];
         }
       }
     }
     return newItem;
   }
-  
-  
+
+
 
   const handleSubmit = (e, operation) => {
     e.preventDefault()
@@ -754,7 +732,7 @@ export default function NewDataTable({ userss, columns, pagee }) {
         url = `https://api.sheetson.com/v2/sheets/Refunded/${bookingID}`;
       }
       body = refunded
-  
+
 
     } else if (pagee === "advanced") {
 
@@ -856,33 +834,6 @@ export default function NewDataTable({ userss, columns, pagee }) {
 
             onClose()
 
-            const updateUser = (id, updatedFields) => {
-              setUsers((prevVal) =>
-                prevVal.map((user) =>
-                  user.id === id
-                    ? {
-                        ...user,
-                        ...updatedFields,
-                      }
-                    : user
-                )
-              );
-            };
-
-            // if(pagee === "checkin") {
-
-            //   let updatedFields = json.checkIn;
-
-            // } else if(pagee === "refunded") {
-
-            // } else if(pagee === "advanced") {
-
-            //   let updatedFields = json.advancedReceived;
-
-            //   updateUser(updatedFields.id, updatedFields)
-
-            // }
-
             fetchData()
 
             window.location.reload()
@@ -897,8 +848,27 @@ export default function NewDataTable({ userss, columns, pagee }) {
 
   }
 
+
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (tableRef.current && !tableRef.current.contains(event.target)) {
+        setHeaderClicked("");
+      }
+    };
+
+    // Attach event listener
+    document.addEventListener("mousedown", handleClickOutside);
+
+    // Cleanup on unmount
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <><Table
+    <>
+    <Table
       aria-label="Example table with custom cells, pagination and sorting"
       isHeaderSticky
       bottomContent={bottomContent}
@@ -914,6 +884,7 @@ export default function NewDataTable({ userss, columns, pagee }) {
       topContentPlacement="outside"
       onSelectionChange={setSelectedKeys}
       onSortChange={(e) => console.log("")}
+      ref={tableRef}
     >
       <TableHeader columns={finalCols}>
         {(column) => (
@@ -962,14 +933,25 @@ export default function NewDataTable({ userss, columns, pagee }) {
                           if (item.uid === "actions" || item.uid === "rowIndex") {
 
                           } else {
-                            return (
-                              <div key={item.uid || index} className="flex flex-col gap-2">
-                                <div className="font-medium pl-1">{toTitleCase(item.name)}:</div>
-                                <div>
-                                  <Input id={item.uid} name={item.uid} className="" placeholder={`Enter ${toTitleCase(item.name)}`} />
+                            if(item.uid === "serialNo") {
+                              return (
+                                <div key={item.uid || index} className="flex flex-col gap-2">
+                                  <div className="font-medium pl-1">{toTitleCase(item.name)}:</div>
+                                  <div>
+                                    <Input id={item.uid} name={item.uid} className="" value={(users.length + 1).toString()} placeholder={`Enter ${toTitleCase(item.name)}`} isDisabled/>
+                                  </div>
                                 </div>
-                              </div>
-                            );
+                              );
+                            }else {
+                              return (
+                                <div key={item.uid || index} className="flex flex-col gap-2">
+                                  <div className="font-medium pl-1">{toTitleCase(item.name)}:</div>
+                                  <div>
+                                    <Input id={item.uid} name={item.uid} className="" placeholder={`Enter ${toTitleCase(item.name)}`} />
+                                  </div>
+                                </div>
+                              );
+                            }
                           }
 
                         })}
@@ -999,7 +981,7 @@ export default function NewDataTable({ userss, columns, pagee }) {
                         <div className="grid grid-cols-2 gap-2 max-h-[32rem] custom-scrollbar">
                           {columns?.map((item, index) => {
 
-                            if (item.uid === "actions") {
+                            if (item.uid === "actions" || item.uid === "rowIndex") {
 
                             } else {
                               const isMatch = Object.keys(selectedRowData).find(key => key === item.uid);
@@ -1010,7 +992,7 @@ export default function NewDataTable({ userss, columns, pagee }) {
                                   <div key={item.uid || index} className="flex flex-col gap-2">
                                     <div className="font-medium pl-1">{toTitleCase(item.name)}:</div>
                                     <div>
-                                      <Input id={item.uid} name={item.uid} className="" defaultValue={selectedRowData[isMatch]} placeholder={`Enter ${toTitleCase(item.name)}`} />
+                                      <Input id={item.uid} name={item.uid} className="" defaultValue={selectedRowData[isMatch]} placeholder={`Enter ${toTitleCase(item.name)}`} isDisabled={item.uid !== "remarks"} />
                                     </div>
                                   </div>
                                 );

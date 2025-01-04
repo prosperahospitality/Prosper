@@ -303,86 +303,170 @@ const EmployeePage = () => {
   const initialFxn = async () => {
     try {
 
-      console.log("PAge:::::::>", page)
+      const apiKey = "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE";
+      const spreadsheetId = "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ";
+      const limit = 100;
+      let allData = [];
+      let skip = 0;
+      let hasMoreData = true;
 
       if (page === "checkin" || page === "" || page === null) {
 
-        const params = {
-          limit: 100,
-          apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
-          spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
-        };
-        const urll = new URL("https://api.sheetson.com/v2/sheets/Checkin");
+        // const params = {
+        //   limit: 100,
+        //   apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
+        //   spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
+        // };
+        // const urll = new URL("https://api.sheetson.com/v2/sheets/Checkin");
 
-        Object.keys(params).forEach(key => urll.searchParams.append(key, encodeURIComponent(params[key])));
+        // Object.keys(params).forEach(key => urll.searchParams.append(key, encodeURIComponent(params[key])));
 
-        urll.searchParams.append('t', new Date().getTime());
+        // urll.searchParams.append('t', new Date().getTime());
 
-        const responsee = await fetch(urll);
-        const dataa = await responsee.json();
-        const data = convertToCamelCase(dataa.results);
+        // const responsee = await fetch(urll);
+        // const dataa = await responsee.json();
+        // const data = convertToCamelCase(dataa.results);
 
-        setUsers(data);
+        // setUsers(data);
 
-        const uniqueColumns = Object.keys(data[0]).map((key) => {
-          return { name: formatKeyToTitle(key), uid: key, sortable: true };
-        });
-        uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+        // const uniqueColumns = Object.keys(data[0]).map((key) => {
+        //   return { name: formatKeyToTitle(key), uid: key, sortable: true };
+        // });
+        // uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
 
-        console.log("Sheet 1: ", data, uniqueColumns);
-        setColumns(uniqueColumns);
+        // console.log("Sheet 1: ", data, uniqueColumns);
+        // setColumns(uniqueColumns);
+
+        try {
+          while (hasMoreData) {
+            const params = {
+              limit,
+              skip,
+              apiKey,
+              spreadsheetId,
+            };
+
+            const url = new URL("https://api.sheetson.com/v2/sheets/Checkin");
+            Object.keys(params).forEach((key) =>
+              url.searchParams.append(key, encodeURIComponent(params[key]))
+            );
+            url.searchParams.append("t", new Date().getTime());
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data.results && data.results.length > 0) {
+              allData = [...allData, ...data.results];
+              skip += limit;
+            } else {
+              hasMoreData = false;
+            }
+          }
+
+          const finalData = convertToCamelCase(allData);
+          console.log("All Data:", finalData);
+
+          setUsers(finalData);
+
+          const uniqueColumns = Object.keys(finalData[0]).map((key) => {
+            return { name: formatKeyToTitle(key), uid: key, sortable: true };
+          });
+          uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+          console.log("Sheet 1: ", finalData, uniqueColumns);
+          setColumns(uniqueColumns);
+
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
 
       } else if (page === "refunded") {
-        const params = {
-          limit: 100,
-          apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
-          spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
-        };
-        const urll = new URL("https://api.sheetson.com/v2/sheets/Refunded");
+        try {
+          while (hasMoreData) {
+            const params = {
+              limit,
+              skip,
+              apiKey,
+              spreadsheetId,
+            };
 
-        Object.keys(params).forEach(key => urll.searchParams.append(key, encodeURIComponent(params[key])));
+            const url = new URL("https://api.sheetson.com/v2/sheets/Refunded");
+            Object.keys(params).forEach((key) =>
+              url.searchParams.append(key, encodeURIComponent(params[key]))
+            );
+            url.searchParams.append("t", new Date().getTime());
 
-        urll.searchParams.append('t', new Date().getTime());
+            const response = await fetch(url);
+            const data = await response.json();
 
-        const responsee = await fetch(urll);
-        const dataa = await responsee.json();
-        const data = convertToCamelCase(dataa.results);
+            if (data.results && data.results.length > 0) {
+              allData = [...allData, ...data.results];
+              skip += limit;
+            } else {
+              hasMoreData = false;
+            }
+          }
 
-        setUsers(data);
+          const finalData = convertToCamelCase(allData);
+          console.log("All Data:", finalData);
 
-        const uniqueColumns = Object.keys(data[0]).map((key) => {
-          return { name: formatKeyToTitle(key), uid: key, sortable: true };
-        });
-        uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+          setUsers(finalData);
 
-        console.log("Sheet 1: ", data, uniqueColumns);
-        setColumns(uniqueColumns);
+          const uniqueColumns = Object.keys(finalData[0]).map((key) => {
+            return { name: formatKeyToTitle(key), uid: key, sortable: true };
+          });
+          uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+          console.log("Sheet 1: ", finalData, uniqueColumns);
+          setColumns(uniqueColumns);
+
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
 
       } else if (page === "advanced") {
-        const params = {
-          limit: 100,
-          apiKey: "GAzqfx03aAhwBr0fwWnZoExB1SNxVWX8cJ8vx7nueonCRhp1TH858bu2ESE",
-          spreadsheetId: "1qYWoO37kNdvimNit4R2_lSmkxiZgyf8Vmtbm8RUApDQ"
-        };
-        const urll = new URL("https://api.sheetson.com/v2/sheets/AdvancedReceived");
+        try {
+          while (hasMoreData) {
+            const params = {
+              limit,
+              skip,
+              apiKey,
+              spreadsheetId,
+            };
 
-        Object.keys(params).forEach(key => urll.searchParams.append(key, encodeURIComponent(params[key])));
+            const url = new URL("https://api.sheetson.com/v2/sheets/AdvancedReceived");
+            Object.keys(params).forEach((key) =>
+              url.searchParams.append(key, encodeURIComponent(params[key]))
+            );
+            url.searchParams.append("t", new Date().getTime());
 
-        urll.searchParams.append('t', new Date().getTime());
+            const response = await fetch(url);
+            const data = await response.json();
 
-        const responsee = await fetch(urll);
-        const dataa = await responsee.json();
-        const data = convertToCamelCase(dataa.results);
+            if (data.results && data.results.length > 0) {
+              allData = [...allData, ...data.results];
+              skip += limit;
+            } else {
+              hasMoreData = false;
+            }
+          }
 
-        setUsers(data);
+          const finalData = convertToCamelCase(allData);
+          console.log("All Data:", finalData);
 
-        const uniqueColumns = Object.keys(data[0]).map((key) => {
-          return { name: formatKeyToTitle(key), uid: key, sortable: true };
-        });
-        uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+          setUsers(finalData);
 
-        console.log("Sheet 1: ", data, uniqueColumns);
-        setColumns(uniqueColumns);
+          const uniqueColumns = Object.keys(finalData[0]).map((key) => {
+            return { name: formatKeyToTitle(key), uid: key, sortable: true };
+          });
+          uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+          console.log("Sheet 1: ", finalData, uniqueColumns);
+          setColumns(uniqueColumns);
+
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
       }
 
 
