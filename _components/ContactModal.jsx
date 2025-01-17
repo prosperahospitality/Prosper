@@ -157,12 +157,14 @@ const ContactModal = ({ modalClicked, onCloseClicked, serviceClicked }) => {
 
     return (
         <div>
-            <Modal isOpen={isOpen} scrollBehavior='inside' onOpenChange={onOpenChange} className='mymodal' id="mymodal">
+
+
+            <Modal isOpen={isOpen} onClose={handleClose} scrollBehavior='inside' onOpenChange={onOpenChange} className='mymodal' id="mymodal">
                 <ModalContent>
                     {(onClose) => (
                         <>
+                            <ModalHeader className="flex flex-col gap-1">{"Contact Form"}</ModalHeader>
                             <form className='relative flex flex-col h-[33rem] md:h-full overflow-y-auto' onSubmit={handleSubmit}>
-                                <ModalHeader className="flex flex-col gap-1">{"Contact Form"}</ModalHeader>
                                 <ModalBody>
 
                                     <div>
@@ -236,13 +238,11 @@ const ContactModal = ({ modalClicked, onCloseClicked, serviceClicked }) => {
                                             label="Attach Resume"
                                         /> */}
                                         </div>
-
                                     </div>
-
                                 </ModalBody>
                                 <ModalFooter>
                                     <>
-                                        <Button color="danger" variant="light" onClick={(e) => handleClose()}>
+                                        <Button type='button' color="danger" variant="light" onClick={(e) => handleClose()}>
                                             Close
                                         </Button>
                                         <Button className='bg-[#800000] text-white' type='submit'>

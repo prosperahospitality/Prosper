@@ -8,6 +8,7 @@ import {
 } from "@/_components/Icons";
 import { Button, Input } from "@nextui-org/react";
 import { motion } from "framer-motion";
+import Swal from 'sweetalert2';
 
 const ContacUsComp = () => {
   const [isSending, setIsSending] = useState(false);
@@ -196,7 +197,7 @@ const ContacUsComp = () => {
             variants={sectionVariants}
             className="bg-white rounded-2xl flex justify-center items-center flex-col p-5 gap-5"
           >
-            <h2 className="text-themeColor text-xl font-semibold">+91- 70217 19028</h2>
+            <h2 className="text-themeColor text-xl font-semibold">+91- 70217 19016</h2>
             <p className="text-gray-500 text-center">
               For all inquiries regarding to booking call us any time at the
               above number
@@ -210,7 +211,7 @@ const ContacUsComp = () => {
             className="bg-white rounded-2xl flex justify-center items-center flex-col p-5 gap-5"
           >
             <h2 className="text-themeColor text-xl font-semibold">
-              prosperaahospitality@gmail.com
+              admin@prosperaahospitality.com
             </h2>
             <p className="text-gray-500 text-center">
               For all inquiries regarding to booking email us any time at the
@@ -256,8 +257,12 @@ const ContacUsComp = () => {
               <div className="bg-transparent h-[75%] md:h-[30rem] rounded-l-lg place-content-center ml-6">
                 <div className="w-fit space-y-10 mx-auto">
                   <div className="flex justify-center items-center p-1 bg-gray-400 rounded-full border border-gray-400">
-                    <a href="#">
-                      <div className="flex justify-center items-center size-8 p-2 ">
+                    <a
+                      href="https://www.facebook.com/profile.php?id=61562089264990&ref=xav_ig_profile_web"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <div className="flex justify-center items-center size-8 p-2">
                         <FacebookBlack fill="black" />
                       </div>
                     </a>
@@ -270,8 +275,12 @@ const ContacUsComp = () => {
                     </a>
                   </div>
                   <div className="flex justify-center items-center p-1 bg-gray-400 rounded-full border border-gray-400">
-                    <a href="#">
-                      <div className="flex justify-center items-center size-8 p-2   ">
+                    <a
+                      href="https://www.instagram.com/prosperahospitality/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <div className="flex justify-center items-center size-8 p-2">
                         <InstagramBlack fill="black" />
                       </div>
                     </a>

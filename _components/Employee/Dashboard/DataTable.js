@@ -964,17 +964,16 @@ export default function NewDataTable({ userss, columns, pagee }) {
                       ? <div className="grid grid-cols-2 gap-2 max-h-[32rem] custom-scrollbar">
 
                         {columns?.map((item, index) => {
-                          if (selectedRowData[item.uid]) {
+              
                             return (
                               <div key={item.uid || index} className="flex flex-col gap-2">
                                 <div className="font-semibold">{toTitleCase(item.name)}:</div>
                                 <div>
-                                  {selectedRowData[item.uid]}
+                                  { selectedRowData[item.uid] === "" ? "null" : selectedRowData[item.uid] }
                                 </div>
                               </div>
                             );
-                          }
-                          return null; // Ensure no undefined elements are returned
+                          
                         })}
                       </div>
                       : <form onSubmit={(e) => handleSubmit(e, "edit")}>

@@ -369,8 +369,8 @@ export default function Footer() {
                 <p className="text-gray-400">
                   Be it an inquiry, feedback, or a simple suggestion.
                 </p>
-                <Link href="mailto:prosperaahospitality@gmail.com" className="mt-1 text-themeColor font-semibold">
-                  prosperaahospitality@gmail.com
+                <Link href="mailto:admin@prosperaahospitality.com" className="mt-1 text-themeColor font-semibold">
+                  admin@prosperaahospitality.com
                 </Link>
               </div>
 
@@ -395,26 +395,26 @@ export default function Footer() {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-[0.25rem]">
               <div className="p-3 px-0 flex flex-col gap-3">
                 <h4 className="font-semibold">Sales</h4>
-                <Link href="mailto:sales@prosperaahospitality.com" className="text-gray-400 text-sm">
-                  Email: sales@prosperaahospitality.com
+                <Link href="mailto:admin@prosperaahospitality.com" className="text-gray-400 text-sm">
+                  Email: admin@prosperaahospitality.com
                 </Link>
                 <p className="text-themeColor font-semibold">Phone no. - +91 70217 19016</p>
               </div>
 
               <div className="px-0 lg:px-3 p-3 flex flex-col gap-3">
                 <h4 className="font-semibold">Support</h4>
-                <Link href="mailto:contact@prosperaahospitality.com" className="text-gray-400 text-sm">
-                  Email: contact@prosperaahospitality.com
+                <Link href="mailto:admin@prosperaahospitality.com" className="text-gray-400 text-sm">
+                  Email: admin@prosperaahospitality.com
                 </Link>
-                <p className="text-themeColor font-semibold">Phone no. - +91 89281 22610</p>
+                <p className="text-themeColor font-semibold">Phone no. - +91 70217 19016</p>
               </div>
 
               <div className="px-0 lg:px-3 p-3 flex flex-col gap-3">
                 <h4 className="font-semibold">Tech Support</h4>
-                <Link href="mailto:tech@prosperaahospitality.com" className="text-gray-400 text-sm">
+                <Link href="mailto:admin@prosperaahospitality.com" className="text-gray-400 text-sm">
                   Email: tech@prosperaahospitality.com
                 </Link>
-                <p className="text-themeColor font-semibold">Phone no. - +91 70217 19028</p>
+                <p className="text-themeColor font-semibold">Phone no. - +91 70217 19016</p>
               </div>
             </div>
           </div>
