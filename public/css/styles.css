@@ -94,12 +94,12 @@
 }
 
 .payment-details h2 {
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-bottom: 0.5rem;
 }
 
 .payment-details p {
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 /* Hotel details */
@@ -109,12 +109,12 @@
 }
 
 .hotel-details p {
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 .subsection {
   padding-left: 0.5rem;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
 }
 
 /* Total Amount in Words */
@@ -233,7 +233,7 @@
 
 /* Label and value pairs */
 .label {
-  font-weight: bold;
+  font-weight: 500;
   text-align: center;
   width: 50%;
   padding: 0.5rem 0;
@@ -275,12 +275,12 @@
 }
 
 .payment-details h2 {
-  font-size: 1rem;
+  font-size: 0.8rem;
   margin-bottom: 0.5rem;
 }
 
 .payment-details p {
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 /* Hotel details */
@@ -290,12 +290,12 @@
 }
 
 .hotel-details p {
-  font-size: 1rem;
+  font-size: 0.8rem;
 }
 
 .subsection {
   padding-left: 0.5rem;
-  padding-top: 1rem;
+  padding-top: 0.5rem;
 }
 
 /* Total Amount in Words */

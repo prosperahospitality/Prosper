@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from "react";
-import { Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Spinner } from "@nextui-org/react";
+import { Button, Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure, Spinner, Select, SelectItem } from "@nextui-org/react";
 import NewDataTable from '@/_components/Employee/Dashboard/DataTable'
 import { useSearchParams } from 'next/navigation'
 import InvoicePage from "@/_components/Employee/Invoice/Invoice";
@@ -16,6 +16,8 @@ const EmployeePage = () => {
 
   const searchParams = useSearchParams();
   const page = searchParams.get('page');
+
+  const [value, setValue] = React.useState(new Set([]));
 
   // function toCamelCase(str) {
   //   const abc = str
@@ -134,11 +136,19 @@ const EmployeePage = () => {
 
 
   const handleInvoiceDownload = async () => {
-    const url = `https://www.prosperaahospitality.com/invoice?users=${encodeURIComponent(
-      JSON.stringify(users)
+
+    const filteredUsers = users?.filter((item) => [...value].includes(item.bookingNo))
+
+    const url = `http://localhost:3000/invoice?users=${encodeURIComponent(
+      JSON.stringify(filteredUsers)
     )}&columns=${encodeURIComponent(JSON.stringify(columns))}&page=${page}`;
     window.open(url, "_blank");
+
   }
+
+  const handleSelectionChange = (e) => {
+    setValue(new Set(e.target.value.split(",")));
+  };
 
   return (
     <>
@@ -175,8 +185,22 @@ const EmployeePage = () => {
           <div className="lg:ml-2 lg:mr-2">
             <NewDataTable userss={users} columns={columns} pagee={page} />
           </div>
-          <div>
-            <button onClick={(e) => handleInvoiceDownload()} className="p-4 bg-red-100 text-black rounded-2xl">Download Pdf</button>
+          <div className="flex flex-col gap-2 ml-2">
+            <div>
+              <Select
+                selectionMode="multiple"
+                className="max-w-xs"
+                placeholder="Select Booking Number"
+                selectedKeys={value}
+                variant="bordered"
+                onChange={handleSelectionChange}
+              >
+                {[...new Set(users?.map((item) => item.bookingNo))]?.map((uniqueBookingNo) => (
+                  <SelectItem key={uniqueBookingNo}>{uniqueBookingNo}</SelectItem>
+                ))}
+              </Select>
+            </div>
+            <Button onClick={(e) => handleInvoiceDownload()} className="w-36 bg-red-100 text-black rounded-2xl">Download Invoice</Button>
           </div>
         </>
       )}

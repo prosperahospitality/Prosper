@@ -1,60 +1,59 @@
-import puppeteer from "puppeteer-core";
-import chromium from "chrome-aws-lambda";
+import puppeteer from 'puppeteer';
+import path from 'path';
+import fs from 'fs';
 
-async function generatePdf(htmlContent) {
+async function generatePdf(rowCount, htmlContent, outputPath) {
     try {
-        const browser = await puppeteer.launch({
-            args: chromium.args,
-            executablePath: await chromium.executablePath,
-            headless: chromium.headless,
-        });
+        // const outputPath = 'C:\/Users\/Admin\/Downloads\/invoice.pdf'
+        const filePath = path.isAbsolute(outputPath)
+            ? outputPath
+            : path.join(process.cwd(), outputPath);
 
+        console.log(`Attempting to save PDF to: ${filePath}`);
+
+        const browser = await puppeteer.launch();
         const page = await browser.newPage();
 
-        // Set the HTML content
-        await page.setContent(htmlContent, { waitUntil: "networkidle0" });
+        await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
 
-        // Optional: Add external CSS
         await page.addStyleTag({
-            url: "https://www.prosperaahospitality.com/css/styles.css",
-        });
+            url: 'http://localhost:3000/css/styles.css'
+          });
 
-        // Generate the PDF as a buffer
-        const pdfBuffer = await page.pdf({
-            format: "A4",
+        await page.pdf({
+            path: filePath,
+            format: 'A4',
             printBackground: true,
             displayHeaderFooter: false,
-            pageRanges: "1",
+            pageRanges: rowCount > 3 ? '1-2' : '1',
             landscape: false,
-            margin: { top: 0, left: 0, bottom: 0, right: 0 },
+            margin: { top: 0, left: 0, bottom: 0, right: 0 }
         });
 
         await browser.close();
 
-        // Return the PDF buffer
-        return pdfBuffer;
+        if (fs.existsSync(filePath)) {
+            console.log(`PDF generated successfully at: ${filePath}`);
+        } else {
+            console.error('PDF generation failed. File not found at:', filePath);
+        }
     } catch (error) {
-        console.error("Error generating PDF:", error);
+        console.error('Error generating PDF:', error);
         throw error;
     }
 }
 
 async function generateMultiplePdfs(pdfRequests) {
     try {
-        const results = await Promise.all(
-            pdfRequests.map(async ({ htmlContent }) => {
-                const pdfBuffer = await generatePdf(htmlContent);
-                return pdfBuffer.toString("base64");
-            })
+        const tasks = pdfRequests.map(({ rowCount, htmlContent, outputPath }) =>
+            generatePdf(rowCount, htmlContent, outputPath)
         );
 
-        console.log("All PDFs generated successfully!");
-        return results;
+        await Promise.all(tasks);
+        console.log('All PDFs generated successfully!');
     } catch (error) {
-        console.error("Error generating multiple PDFs:", error);
-        throw error;
+        console.error('Error generating multiple PDFs:', error);
     }
 }
-
 
 export default generateMultiplePdfs;
