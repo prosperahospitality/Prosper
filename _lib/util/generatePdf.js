@@ -17,7 +17,7 @@ async function generatePdf(htmlContent, outputPath) {
         await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
 
         await page.addStyleTag({
-            url: 'http://localhost:3000/css/styles.css'
+            url: 'https://www.prosperaahospitality.com/css/styles.css'
           });
 
         await page.pdf({
