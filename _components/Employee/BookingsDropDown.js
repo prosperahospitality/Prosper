@@ -123,7 +123,7 @@ export default function BookingsDropDown({ isOpen, toggleSidebar }) {
           variant="flat"
         >
           <DropdownItem
-            onClick={() => window.location.href = '/invoice'}
+            onClick={() => window.location.href = '/employee/invoice?page=pinvoice'}
             className="text-foreground-600 hover:text-primary"
             startContent={<ClockCounterClockwise aria-hidden="true" className="text-foreground" />}
             key="new"

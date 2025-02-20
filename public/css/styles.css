@@ -147,6 +147,8 @@
   width: 11rem;
 }
 
+
+
 /* Invoice Table */
 .invoice-table {
   width: 100%;
@@ -211,11 +213,21 @@
   width: 65%;
 }
 
+.plogo-container img {
+  height: 100%;
+  width: 65%;
+}
+
 .contact-img-container {
   width: 30%;
 }
 
 .contact-img-container img {
+  height: 6rem;
+  width: 13rem;
+}
+
+.pcontact-img-container img {
   height: 6rem;
   width: 13rem;
 }
@@ -327,6 +339,55 @@
   height: 9rem;
   width: 11rem;
 }
+
+/* //////////////////////////////////////////////////////// */
+
+.pfooter {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.pnote {
+  border: 2px solid #000;
+  width: 24rem;
+  height: fit-content;
+  margin-right: 0.5rem;
+  padding: 5px;
+  font-weight: bold;
+  display: flex;
+  margin-top: 0.5rem;
+}
+
+.psubnote {
+  width: 100%;
+  height: fit-content;
+  justify-self: center;
+  align-self: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.psubsubnote {
+  display: flex;
+}
+
+.psignature {
+  border: 2px solid #000;
+  width: 15rem;
+  margin-right: 0.5rem;
+  padding: 5px;
+  font-weight: bold;
+}
+
+.psignature-img-container img {
+  height: 7rem;
+  width: 10rem;
+}
+
+/* //////////////////////////////////////////////////////// */
 
 /* Invoice Table */
 .invoice-table {

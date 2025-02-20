@@ -115,6 +115,47 @@ const EmployeePage = () => {
         } catch (error) {
           console.error("Error fetching data:", error);
         }
+      }else if(page === "pinvoice") {
+        try {
+          while (hasMoreData) {
+            const params = {
+              limit,
+              skip,
+              apiKey,
+              spreadsheetId,
+            };
+
+            const url = new URL("https://api.sheetson.com/v2/sheets/ProsperaInvoice");
+            Object.keys(params).forEach((key) =>
+              url.searchParams.append(key, encodeURIComponent(params[key]))
+            );
+            url.searchParams.append("t", new Date().getTime());
+
+            const response = await fetch(url);
+            const data = await response.json();
+
+            if (data.results && data.results.length > 0) {
+              allData = [...allData, ...data.results];
+              skip += limit;
+            } else {
+              hasMoreData = false;
+            }
+          }
+          const finalData = convertToCamelCase(allData);
+
+          setUsers(finalData);
+
+          const uniqueColumns = Object.keys(finalData[0]).map((key) => {
+            return { name: formatKeyToTitle(key), uid: key, sortable: true };
+          });
+
+          uniqueColumns.push({ name: "ACTIONS", uid: "actions", sortable: false });
+
+          setColumns(uniqueColumns);
+
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
       }
     } catch (error) {
       console.error("Error::::::>", error);
