@@ -2,6 +2,7 @@ import React from 'react'
 import ContactUs from '@/_components/ContactUs/ContactUs'
 import Landing from '@/_components/Home/Landing'
 import OurClients from '@/_components/ContactUs/OurClients'
+import Testimonials from '@/_components/ContactUs/Testimonials'
 
 const contactus = () => {
 
@@ -17,6 +18,7 @@ const contactus = () => {
     <div className='flex flex-col gap-10 lg:gap-16'>
       <Landing content={revenuedata} />
       <ContactUs />
+      <Testimonials />
       <OurClients />
     </div>
   )

@@ -8,7 +8,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import IMAGES from "@/public/index";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
-import { UserRound } from "lucide-react" 
+import { UserRound } from "lucide-react"
 
 export default function InstagramReels({ }) {
     const [isBeginning, setIsBeginning] = useState(true);
@@ -143,7 +143,7 @@ export default function InstagramReels({ }) {
                                         </div>
                                         <div className="absolute top-0 left-0 w-[35%] h-[35%] bg-black overflow-hidden rounded-br-[50%]">
                                             {/* <Image src={testimonial.image} fill className='w-full h-full object-cover' /> */}
-                                            <UserRound className="text-slate-100 w-full h-full"/>
+                                            <UserRound className="text-slate-100 w-full h-full" />
                                         </div>
                                     </div>
                                 </div>

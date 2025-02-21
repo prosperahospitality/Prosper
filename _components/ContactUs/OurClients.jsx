@@ -141,11 +141,10 @@ const OurClients = () => {
   ));
 
   return (
-    <div className="p-0 bg-red-100 w-full h-full">
-      {/* Set relative and overflow-hidden on the container to clip overflowing content */}
+    <div className="p-0 bg-white w-full h-full">
       <div className="w-full mx-auto relative overflow-hidden">
-        <div className="bg-white rounded-2xl flex flex-col justify-center items-center p-5 m-5 gap-5">
-          <p className="text-2xl font-semibold">Our Clients</p>
+        <div className="bg-white rounded-2xl flex flex-col justify-center items-center px-5 m-5 gap-5">
+          <p className="text-2xl font-semibold pb-2">Our Clients</p>
           <p>
             More than 5,000+ clients using Prospera Hospitality to improve their
             hotel business
