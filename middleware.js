@@ -4,9 +4,6 @@ import { decode } from 'next-auth/jwt';
 export async function middleware(request) {
   const { pathname, cookies } = request;
 
-  // console.log("Cookies::::::>", cookies)
-
-
   if (request.nextUrl.pathname.startsWith('/admin/')) {
     // const authToken = cookies.get("next-auth.session-token")?.value;
     const authToken = cookies.get("__Secure-next-auth.session-token")?.value;

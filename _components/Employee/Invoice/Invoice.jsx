@@ -40,8 +40,7 @@ const InvoicePage = () => {
       };
     });
 
-    console.log("pdfRequests::::::>", pdfRequests)
-
+    console.log("Itemssssssssssssssss::::>", pdfRequests)
 
     const response = await axios.post('/api/downloadInvoice', { pdfRequests: pdfRequests });
 

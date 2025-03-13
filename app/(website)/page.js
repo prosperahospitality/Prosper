@@ -8,6 +8,7 @@ import Blogs from '@/_components/Home/Blogs'
 import InstagramFeed from '@/_components/Home/InstagramFeed'
 import ContactForm from '@/_components/Home/ContactForm'
 import Testimonial from '@/_components/Testimonial'
+import OurClients from '@/_components/Home/OurClients'
 
 const Home = () => {
 
@@ -29,6 +30,7 @@ const Home = () => {
       <Blogs />
       <InstagramFeed />
       <Testimonial />
+      <OurClients />
       <ContactForm />
     </div>
   )
