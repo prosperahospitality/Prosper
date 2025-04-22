@@ -142,7 +142,7 @@ const OurClients = () => {
 
   return (
     <div className="p-0 bg-white w-full h-full">
-      <div className="w-full mx-auto relative overflow-hidden">
+      <div className="w-[85%] mx-auto relative overflow-hidden">
         <div className="bg-white rounded-2xl flex flex-col justify-center items-center px-5 m-5 gap-5">
           <p className="text-2xl font-semibold pb-2">Our Clients</p>
           <p>

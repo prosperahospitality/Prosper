@@ -310,7 +310,7 @@ const InvoicePage = () => {
                 ? <div className="footer">
                   <div className="signature">
                     <div className="authorised-signatory">
-                      <span>For Krafitech Hospitality</span>
+                      <span>From Krafitech Hospitality</span>
                     </div>
                     <div className="signature-img-container">
                       <img
@@ -335,7 +335,7 @@ const InvoicePage = () => {
                   </div>
                   <div className="psignature">
                     <div className="pauthorised-signatory">
-                      <span>For Krafitech Hospitality</span>
+                      <span>From Krafitech Hospitality</span>
                     </div>
                     <div className="psignature-img-container">
                       <img

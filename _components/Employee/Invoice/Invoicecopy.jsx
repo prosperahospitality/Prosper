@@ -280,7 +280,7 @@ const InvoicePage = () => {
             <div className="w-full flex justify-end items-start mt-8 print:mt-4">
               <div className="border w-96 border-black mr-2">
                 <div className="flex flex-col pl-2 py-2">
-                  <div className="font-bold">For Krafitech Hospitality</div>
+                  <div className="font-bold">From Krafitech Hospitality</div>
                   <div>
                     <img
                       src={`http://localhost:3000/img/krafitechsign.png`}
