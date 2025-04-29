@@ -8,7 +8,7 @@ const TestimonialsPage = () => {
   const revenuedata = [
     {
       "key": "1",
-      "title": "Prospera Success Story.",
+      "title": "Prospera Success Story",
       "description": "At Prospera Hospitality, we’ve transformed hospitality through innovation and exceptional service. With Prospera’s support, we’ve created unforgettable guest experiences, earning recognition as leaders in the industry."
     }
   ]

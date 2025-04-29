@@ -176,7 +176,7 @@ export default NavBar;
 
 const links = [
   {
-    name: "Our Services",
+    name: "Services",
     url: "/services",
     sublinks: [
       { name: "Web Development", url: "/services/web-development" },
@@ -187,11 +187,12 @@ const links = [
   { name: "Pricing", url: "/prices" },
   { name: "Testimonials", url: "/testimonials" },
   { name: "Blogs", url: "/blogs" },
+  { name: "Partners", url: "/partners" },
 ];
 
 const links1 = [
   {
-    name: "Our Services",
+    name: "Services",
     url: "/services",
     sublinks: [
       { name: "All Services", url: "/services" },
@@ -203,6 +204,7 @@ const links1 = [
   { name: "Pricing", url: "/prices" },
   { name: "Testimonials", url: "/testimonials" },
   { name: "Blogs", url: "/blogs" },
+  { name: "Partners", url: "/partners" },
 ];
 
 
