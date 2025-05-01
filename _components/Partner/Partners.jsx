@@ -113,7 +113,7 @@ const Partners = () => {
 
   return (
     <div className='w-full h-full flex justify-center items-center mt-32'>
-      <div className='w-[80%] h-full'>
+      <div className='w-[95%] lg:w-[80%] h-full'>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-6">
           {onboardedProperties.map((property, index) => (
             <div key={index} className="border rounded-lg shadow-md overflow-hidden bg-white">
