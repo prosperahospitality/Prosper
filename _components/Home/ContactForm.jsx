@@ -107,7 +107,7 @@ const ContactForm = () => {
 
             console.log("Form submitted:", formValues);
 
-            const response = await fetch('/api/', {
+            const response = await fetch('/api/send-email', {
 
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -132,7 +132,7 @@ const ContactForm = () => {
                     phoneNumber: '',
                 })
                 setSelectedState('')
-                setSelectedCitysetSelectedState('')
+                // setSelectedCitysetSelectedState('')
             } else {
                 alert(`Error: ${data.message}`);
             }
