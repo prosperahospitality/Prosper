@@ -347,7 +347,7 @@ export default function Footer() {
               <div className="p-3 px-0 flex flex-col gap-3">
                 <h4 className="font-semibold">Our Office</h4>
                 <p className="text-gray-400 text-sm">
-                  Office No.1006
+                  Office No. 1011
                   Juhi Niharika Mirage, 274, Kopra Rd, Sector 10, Kharghar, Navi Mumbai, Maharashtra 410210.
                 </p>
                 <a href="https://maps.app.goo.gl/LQZzRHKRaVXkZrc59" target="_blank" rel="noopener noreferrer" className="font-semibold text-themeColor">
