@@ -227,7 +227,7 @@ const ContacUsComp = () => {
           >
             <h2 className="text-themeColor text-xl font-semibold">Prospera Hospitality</h2>
             <p className="text-gray-500 text-center">
-              Office No.1006 Juhi Niharika Mirage, 274, Kopra Rd, Sector 10, Kharghar, Navi Mumbai, Maharashtra 410210.
+              Office No. 1011 Juhi Niharika Mirage, 274, Kopra Rd, Sector 10, Kharghar, Navi Mumbai, Maharashtra 410210.
             </p>
           </motion.div>
         </div>
