@@ -346,7 +346,7 @@ const PrivacyPolicy = () => {
                             <ul className='flex flex-col gap-2 mt-4'>
                                 <li><span className='font-semibold'>Email:</span>{` prosperaahospitality@gmail.com`}</li>
                                 <li><span className='font-semibold'>Phone:</span>{` +91 7977383452`}</li>
-                                <li><span className='font-semibold'>Address:</span>{` Prosperaa Hospitality, Office No.1006 Juhi Niharika Mirage, 274, Kopra Rd, Sector 10, Kharghar, Navi Mumbai, Maharashtra 410210.`}</li>
+                                <li><span className='font-semibold'>Address:</span>{` Prosperaa Hospitality, Office No. 1011 Juhi Niharika Mirage, 274, Kopra Rd, Sector 10, Kharghar, Navi Mumbai, Maharashtra 410210.`}</li>
                             </ul>
                            
                         </div>
