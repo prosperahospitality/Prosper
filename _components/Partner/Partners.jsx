@@ -262,76 +262,19 @@ const Partners = () => {
                   className="mySwiper2"
                 >
 
-                  <SwiperSlide>
-                    <Image
-                      src={IMAGES.kinnara1}
-                      alt={`Room Image`}
-                      width={800}
-                      height={800}
-                      className="object-fill rounded-lg"
-                    // priority={index === 0}
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <Image
-                      src={IMAGES.kinnara2}
-                      alt={`Room Image`}
-                      width={800}
-                      height={800}
-                      className="object-fill rounded-lg"
-                    // priority={index === 0}
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <Image
-                      src={IMAGES.kinnara3}
-                      alt={`Room Image`}
-                      width={800}
-                      height={800}
-                      className="object-fill rounded-lg"
-                    // priority={index === 0}
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <Image
-                      src={IMAGES.kinnara4}
-                      alt={`Room Image`}
-                      width={800}
-                      height={800}
-                      className="object-fill rounded-lg"
-                    // priority={index === 0}
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <Image
-                      src={IMAGES.kinnara5}
-                      alt={`Room Image`}
-                      width={800}
-                      height={800}
-                      className="object-fill rounded-lg"
-                    // priority={index === 0}
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <Image
-                      src={IMAGES.kinnara6}
-                      alt={`Room Image`}
-                      width={800}
-                      height={800}
-                      className="object-fill rounded-lg"
-                    // priority={index === 0}
-                    />
-                  </SwiperSlide>
-                  <SwiperSlide>
-                    <Image
-                      src={IMAGES.kinnara7}
-                      alt={`Room Image`}
-                      width={800}
-                      height={800}
-                      className="object-fill rounded-lg"
-                    // priority={index === 0}
-                    />
-                  </SwiperSlide>
+                   {onboardedProperties.map((property, index) =>
+                    property.images.map((img, i) => (
+                      <SwiperSlide key={`${index}-${i}`}>
+                        <Image
+                          src={img}
+                          alt={`Room Image ${i + 1}`}
+                          width={800}
+                          height={800}
+                          className="object-fill rounded-lg"
+                        />
+                      </SwiperSlide>
+                    ))
+                  )}
 
                 </Swiper>
 
