@@ -266,7 +266,7 @@ const Partners = () => {
                     property.images.map((img, i) => (
                       <SwiperSlide key={`${index}-${i}`}>
                         <Image
-                          src={img}
+                          src={property.images[i]}
                           alt={`Room Image ${i + 1}`}
                           width={800}
                           height={800}
@@ -302,7 +302,7 @@ const Partners = () => {
                     property.images.map((img, i) => (
                       <SwiperSlide key={`${index}-${i}`}>
                         <Image
-                          src={img}
+                          src={property.images}
                           alt={`Room Image ${i + 1}`}
                           width={800}
                           height={800}
