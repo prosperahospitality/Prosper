@@ -28,6 +28,62 @@ const Partners = () => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
   const onboardedProperties = [
+      {
+      name: "Blue Mormon Jungle Holiday Resort",
+      images: [
+        IMAGES.mormon1,
+        IMAGES.mormon2,
+        IMAGES.mormon3,
+        IMAGES.mormon4,
+        IMAGES.mormon5,
+        IMAGES.mormon6,
+        IMAGES.mormon7,
+        IMAGES.mormon8,
+        IMAGES.mormon9,
+        IMAGES.mormon10,
+        IMAGES.mormon11,
+        IMAGES.mormon12,
+      ],
+      location: "Post Karkudi, Taluka Khed, near Palkhewadi, Bhimashankar, Maharashtra 410509",
+      onboardedDate: "2025-03-14",
+      description:
+        "The Blue Mormon Jungle Holiday Resort is a nature getaway located 10 kilometers from Maharashtra's Bhimashankar Temple. It offers rustic cottages, local food, and firefly treks within the Sahyadri mountains."
+    },
+    {
+      name: "Natraj Holiday Resort - Bhimashankar",
+      images: [
+        IMAGES.natraj1,
+        IMAGES.natraj2,
+        IMAGES.natraj3,
+        IMAGES.natraj4,
+        IMAGES.natraj5,
+        IMAGES.natraj6,
+        IMAGES.natraj7,
+        IMAGES.natraj8,
+      ],
+      location: "SH 112, Bhimashankar Temple Road, Nigdale, Bhimashaankar, Maharashtra 410509",
+      onboardedDate: "2025-01-09",
+      description:
+        "Natraj Holiday Resort is a casual, budget-friendly retreat located 15 minutes away from the sacred Bhimashankar Jyotirlinga Temple. Surrounded by green forests and mountains, it features simple AC and non-AC rooms, a pure vegetarian restaurant, and complimentary parking."
+    },
+    {
+      name: "Neelam Hills Resort - Bhimashankar",
+      images: [
+        IMAGES.neelam1,
+        IMAGES.neelam2,
+        IMAGES.neelam3,
+        IMAGES.neelam4,
+        IMAGES.neelam5,
+        IMAGES.neelam6,
+        IMAGES.neelam7,
+        IMAGES.neelam8,
+        IMAGES.neelam9,
+      ],
+      location: "Talagarh, Tale Ghar, Maharashtra 410509",
+      onboardedDate: "2025-02-06",
+      description:
+        "Neelam Hills Resort is a modest hilltop retreat in Taleghar, located about 15 km from the Bhimashankar Jyotirlinga temple. Surrounded by the scenic Western Ghats, it provides simple, functional rooms and open seating, serving as a peaceful base for pilgrims and nature lovers exploring the region."
+    },
     {
       name: "GG Farm",
       images: [
