@@ -210,8 +210,10 @@ const ContacUsComp = () => {
             variants={sectionVariants}
             className="bg-white rounded-2xl flex justify-center items-center flex-col p-5 gap-5"
           >
-            <h2 className="text-themeColor text-xl font-semibold flex">
+            <h2 className="text-themeColor text-xl font-semibold">
               <span>HR@prosperaahospitality.com</span>
+            </h2>
+            <h2 className="text-themeColor text-xl font-semibold">
               <span>admin@prosperaahospitality.com</span>
             </h2>
             <p className="text-gray-500 text-center">
