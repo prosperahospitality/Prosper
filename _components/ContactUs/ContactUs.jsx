@@ -210,8 +210,9 @@ const ContacUsComp = () => {
             variants={sectionVariants}
             className="bg-white rounded-2xl flex justify-center items-center flex-col p-5 gap-5"
           >
-            <h2 className="text-themeColor text-xl font-semibold">
-              admin@prosperaahospitality.com
+            <h2 className="text-themeColor text-xl font-semibold flex">
+              <span>HR@prosperaahospitality.com</span>
+              <span>admin@prosperaahospitality.com</span>
             </h2>
             <p className="text-gray-500 text-center">
               For all inquiries regarding to booking email us any time at the
