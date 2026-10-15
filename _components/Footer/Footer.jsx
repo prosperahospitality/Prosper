@@ -403,6 +403,9 @@ export default function Footer() {
 
               <div className="px-0 lg:px-3 p-3 flex flex-col gap-3">
                 <h4 className="font-semibold">Support</h4>
+                <Link href="mailto:hr@prosperaahospitality.com" className="text-gray-400 text-sm">
+                  HR@prosperaahospitality.com
+                </Link>
                 <Link href="mailto:admin@prosperaahospitality.com" className="text-gray-400 text-sm">
                   admin@prosperaahospitality.com
                 </Link>
