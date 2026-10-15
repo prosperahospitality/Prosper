@@ -369,6 +369,9 @@ export default function Footer() {
                 <p className="text-gray-400">
                   Be it an inquiry, feedback, or a simple suggestion.
                 </p>
+                <Link href="mailto:hr@prosperaahospitality.com" className="mt-1 text-themeColor font-semibold">
+                  HR@prosperaahospitality.com
+                </Link>
                 <Link href="mailto:admin@prosperaahospitality.com" className="mt-1 text-themeColor font-semibold">
                   admin@prosperaahospitality.com
                 </Link>
@@ -395,6 +398,9 @@ export default function Footer() {
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-[0.25rem]">
               <div className="p-3 px-0 flex flex-col gap-3">
                 <h4 className="font-semibold">Sales</h4>
+                <Link href="mailto:hr@prosperaahospitality.com" className="text-gray-400 text-sm">
+                  HR@prosperaahospitality.com
+                </Link>
                 <Link href="mailto:admin@prosperaahospitality.com" className="text-gray-400 text-sm">
                   admin@prosperaahospitality.com
                 </Link>
@@ -414,8 +420,11 @@ export default function Footer() {
 
               <div className="px-0 lg:px-3 p-3 flex flex-col gap-3">
                 <h4 className="font-semibold">Tech Support</h4>
+                <Link href="mailto:hr@prosperaahospitality.com" className="text-gray-400 text-sm">
+                  HR@prosperaahospitality.com
+                </Link>
                 <Link href="mailto:admin@prosperaahospitality.com" className="text-gray-400 text-sm">
-                  tech@prosperaahospitality.com
+                  admin@prosperaahospitality.com
                 </Link>
                 <p className="text-themeColor font-semibold">Phone no. - +91 70217 19016</p>
               </div>
