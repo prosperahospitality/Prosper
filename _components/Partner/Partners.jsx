@@ -27,7 +27,80 @@ const Partners = () => {
 
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
 
+  const [propClicked, setPropClicked] = useState("");
+
   const onboardedProperties = [
+    {
+      id: "158",
+      name: "Shreeji Villa Gir",
+      images: [
+        IMAGES.shreejivillagir1,
+        IMAGES.shreejivillagir2,
+        IMAGES.shreejivillagir3,
+        IMAGES.shreejivillagir4,
+        IMAGES.shreejivillagir5,
+        IMAGES.shreejivillagir6,
+        IMAGES.shreejivillagir7,
+        IMAGES.shreejivillagir8,
+      ],
+      location: "Shreeji Villa Gir, Near Janak cement product to Virpur village",
+      onboardedDate: "2026-11-02",
+      description:
+        "Shreeji Villa Gir is a peaceful and comfortable stay located near Janak Cement Product, offering a relaxing atmosphere and convenient access to Virpur village."
+    },
+    {
+      id: "489",
+      name: "Riverscape Villa Farm Stay Tarkarli",
+      images: [
+        IMAGES.riverscapetarkarli1,
+        IMAGES.riverscapetarkarli2,
+        IMAGES.riverscapetarkarli3,
+        IMAGES.riverscapetarkarli4,
+        IMAGES.riverscapetarkarli5,
+        IMAGES.riverscapetarkarli6,
+        IMAGES.riverscapetarkarli7,
+      ],
+      location: "Location - 1136, Gawkar Wada, Mukkam, Post, Hadi, Maharashtra 416626",
+      onboardedDate: "2026-11-04",
+      description:
+        "Riverscape Villa Farm Stay Tarkarli offers a peaceful and relaxing getaway surrounded by natural beauty, providing a comfortable stay experience close to the scenic attractions of Tarkarli."
+    },
+    {
+      id: "589",
+      name: "Shree Laxmi Home Stay Tarkarli",
+      images: [
+        IMAGES.shreelaxmitarkarli1,
+        IMAGES.shreelaxmitarkarli2,
+        IMAGES.shreelaxmitarkarli3,
+        IMAGES.shreelaxmitarkarli4,
+        IMAGES.shreelaxmitarkarli5,
+      ],
+      location: "Shree Lakshmi Home Stay, road, Tarkarli, Wayari, Maharashtra 416606",
+      onboardedDate: "2026-11-05",
+      description:
+        "Shree Laxmi Home Stay Tarkarli offers a cosy and comfortable stay with a homely atmosphere, providing guests with a peaceful experience while exploring the beautiful beaches and attractions of Tarkarli."
+    },
+    {
+      id: "289",
+      name: "Sunrise Chandoli Resort",
+      images: [
+        IMAGES.sunrisechandoli1,
+        IMAGES.sunrisechandoli2,
+        IMAGES.sunrisechandoli3,
+        IMAGES.sunrisechandoli4,
+        IMAGES.sunrisechandoli5,
+        IMAGES.sunrisechandoli6,
+        IMAGES.sunrisechandoli7,
+        IMAGES.sunrisechandoli8,
+        IMAGES.sunrisechandoli9,
+        IMAGES.sunrisechandoli10,
+        IMAGES.sunrisechandoli11,
+      ],
+      location: "behind Chandoli resort, Chandoli, Maharashtra 415415",
+      onboardedDate: "2026-11-05",
+      description:
+        "Sunrise Chandoli Resort offers a peaceful and refreshing getaway surrounded by natural beauty, providing comfortable accommodation and a relaxing atmosphere for guests seeking a memorable stay close to nature."
+    },
       {
       name: "Blue Mormon Jungle Holiday Resort",
       images: [
@@ -165,7 +238,10 @@ const Partners = () => {
   //   },
   // };
 
-
+  const showFunction = (id) => {
+    setPropClicked(id)
+    onOpen()
+  }
 
   return (
     <div className='w-full h-full flex justify-center items-center mt-32'>
@@ -262,19 +338,27 @@ const Partners = () => {
                   className="mySwiper2"
                 >
 
-                   {onboardedProperties.map((property, index) =>
-                    property.images.map((img, i) => (
-                      <SwiperSlide key={`${index}-${i}`}>
-                        <Image
-                          src={property.images[i]}
-                          alt={`Room Image ${i + 1}`}
-                          width={800}
-                          height={800}
-                          className="object-fill rounded-lg"
-                        />
-                      </SwiperSlide>
-                    ))
-                  )}
+                   {(() => {
+
+                    const selectedProperty = onboardedProperties.find(
+                      (property) => property.id === propClicked
+                    );
+
+                    // If found, map over its images safely
+                    return selectedProperty?.images.map((img, i) => (
+                       (
+                        <SwiperSlide key={`${selectedProperty.id}-${i}`}>
+                          <Image
+                            src={img}
+                            alt={`Room Image ${i + 1}`}
+                            width={800}
+                            height={800}
+                            className="object-fill rounded-lg"
+                          />
+                        </SwiperSlide>
+                      )
+                    ));
+                  })()}
 
                 </Swiper>
 
@@ -298,19 +382,25 @@ const Partners = () => {
                   }}
                 >
 
-                  {onboardedProperties.map((property, index) =>
-                    property.images.map((img, i) => (
-                      <SwiperSlide key={`${index}-${i}`}>
-                        <Image
-                          src={property.images}
-                          alt={`Room Image ${i + 1}`}
-                          width={800}
-                          height={800}
-                          className="object-fill rounded-lg"
-                        />
-                      </SwiperSlide>
-                    ))
-                  )}
+                  {(() => {
+  // 1. Find the specific property that matches the clicked ID
+  const matchedProperty = onboardedProperties.find(
+    (property) => property.id === propClicked
+  );
+
+  // 2. If found, map through its images array directly
+  return matchedProperty?.images.map((img, i) => (
+    <SwiperSlide className="rounded-xl" key={i}>
+      <Image
+        src={img}
+        alt={`Room Image ${i + 1}`}
+        width={200}
+        height={200}
+        className="object-cover rounded-xl"
+        // priority={i === 0} // Optional: Prioritise loading the first image
+      />
+    </SwiperSlide>
+  ));
 
                 </Swiper>
               </ModalBody>
