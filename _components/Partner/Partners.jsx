@@ -463,6 +463,23 @@ const Partners = () => {
 
   const onboardedProperties = [
     {
+      id: "373",
+      name: "MD Grand Hotel & Resort Agra by Prospera",
+      images: [
+        IMAGES.mdgrandagra1,
+        IMAGES.mdgrandagra2,
+        IMAGES.mdgrandagra3,
+        IMAGES.mdgrandagra4,
+        IMAGES.mdgrandagra5,
+        IMAGES.mdgrandagra6,
+        IMAGES.mdgrandagra7,
+      ],
+      location: "MD Grand Hotel & Resort, NH11, jaipur highway road, nahar, near Patholi, Patholi, Uttar Pradesh 283105",
+      onboardedDate: "2026-11-15",
+      description:
+        "MD Grand Hotel & Resort is a budget-friendly property on Jaipur Road in Agra offering comfortable air-conditioned rooms, an on-site restaurant, free Wi-Fi, and convenient parking"
+    },
+    {
       id: "158",
       name: "Shreeji Villa Gir",
       images: [
