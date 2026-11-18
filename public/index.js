@@ -151,6 +151,13 @@ const IMAGES = {
     sunrisechandoli9: '/img/sunrisechandoli/9.jpg',
     sunrisechandoli10: '/img/sunrisechandoli/10.jpg',
     sunrisechandoli11: '/img/sunrisechandoli/11.jpg',
+    mdgrandagra1: '/img/mdgrandagra/1.jpg',
+    mdgrandagra2: '/img/mdgrandagra/2.jpg',
+    mdgrandagra3: '/img/mdgrandagra/3.jpg',
+    mdgrandagra4: '/img/mdgrandagra/4.jpg',
+    mdgrandagra5: '/img/mdgrandagra/5.jpg',
+    mdgrandagra6: '/img/mdgrandagra/6.jpg',
+    mdgrandagra7: '/img/mdgrandagra/7.jpg',
 }
 
 export default IMAGES;
