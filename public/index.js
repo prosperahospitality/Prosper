@@ -158,6 +158,13 @@ const IMAGES = {
     mdgrandagra5: '/img/mdgrandagra/5.jpg',
     mdgrandagra6: '/img/mdgrandagra/6.jpg',
     mdgrandagra7: '/img/mdgrandagra/7.jpg',
+    tpgardenmainpuri1: '/img/tpgardenmainpuri/1.jpg',
+    tpgardenmainpuri2: '/img/tpgardenmainpuri/2.jpg',
+    tpgardenmainpuri3: '/img/tpgardenmainpuri/3.jpg',
+    tpgardenmainpuri4: '/img/tpgardenmainpuri/4.jpg',
+    tpgardenmainpuri5: '/img/tpgardenmainpuri/5.jpg',
+    tpgardenmainpuri6: '/img/tpgardenmainpuri/6.jpg',
+    tpgardenmainpuri7: '/img/tpgardenmainpuri/7.jpg',
 }
 
 export default IMAGES;
