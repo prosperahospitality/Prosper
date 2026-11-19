@@ -165,6 +165,14 @@ const IMAGES = {
     tpgardenmainpuri5: '/img/tpgardenmainpuri/5.jpg',
     tpgardenmainpuri6: '/img/tpgardenmainpuri/6.jpg',
     tpgardenmainpuri7: '/img/tpgardenmainpuri/7.jpg',
+    leelaresortsolapur1: '/img/leelaresortsolapur/1.jpg',
+    leelaresortsolapur2: '/img/leelaresortsolapur/2.jpg',
+    leelaresortsolapur3: '/img/leelaresortsolapur/3.jpg',
+    leelaresortsolapur4: '/img/leelaresortsolapur/4.jpg',
+    leelaresortsolapur5: '/img/leelaresortsolapur/5.jpg',
+    leelaresortsolapur6: '/img/leelaresortsolapur/6.jpg',
+    leelaresortsolapur7: '/img/leelaresortsolapur/7.jpg',
+    leelaresortsolapur8: '/img/leelaresortsolapur/8.jpg',
 }
 
 export default IMAGES;
