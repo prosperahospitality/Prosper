@@ -463,6 +463,24 @@ const Partners = () => {
 
   const onboardedProperties = [
     {
+      id: "987",
+      name: "Leela Resort and Agro Tourism Solapur by Prospera",
+      images: [
+        IMAGES.leelaresortsolapur1,
+        IMAGES.leelaresortsolapur2,
+        IMAGES.leelaresortsolapur3,
+        IMAGES.leelaresortsolapur4,
+        IMAGES.leelaresortsolapur5,
+        IMAGES.leelaresortsolapur6,
+        IMAGES.leelaresortsolapur7,
+        IMAGES.leelaresortsolapur8,
+      ],
+      location: "165 limbi chincholi dindur bypass, Akkalkot solapur highway, immediate left after crossing limbi, chincholi bridge, Maharashtra 413228",
+      onboardedDate: "2026-11-09",
+      description:
+        "Leela Resort & Agro Tourism is a peaceful family-oriented countryside retreat along the Solapur–Akkalkot road featuring laterite-stone cottages, lush greenery, home-cooked meals, and a swimming pool."
+    },
+    {
       id: "373",
       name: "MD Grand Hotel & Resort Agra by Prospera",
       images: [
@@ -491,7 +509,7 @@ const Partners = () => {
         IMAGES.tpgardenmainpuri6,
         IMAGES.tpgardenmainpuri7,
       ],
-      location: "MD Grand Hotel & Resort, NH11, jaipur highway road, nahar, near Patholi, Patholi, Uttar Pradesh 283105",
+      location: "Awadh Nagar Station Rd, Devpura, Banshi Gohara, Mainpuri, Devpura Dehat, Uttar Pradesh 205001",
       onboardedDate: "2026-11-16",
       description:
         "TP Garden and Hotel is a hotel, banquet hall, and event venue on Station Road in Devpura, Mainpuri, Uttar Pradesh, offering rooms, dining, and lawn/banquet spaces for stays and celebrations."
