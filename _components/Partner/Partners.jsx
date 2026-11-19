@@ -480,6 +480,23 @@ const Partners = () => {
         "MD Grand Hotel & Resort is a budget-friendly property on Jaipur Road in Agra offering comfortable air-conditioned rooms, an on-site restaurant, free Wi-Fi, and convenient parking"
     },
     {
+      id: "222",
+      name: "T P Garden & Hotel Mainpuri by Prospera",
+      images: [
+        IMAGES.tpgardenmainpuri1,
+        IMAGES.tpgardenmainpuri2,
+        IMAGES.tpgardenmainpuri3,
+        IMAGES.tpgardenmainpuri4,
+        IMAGES.tpgardenmainpuri5,
+        IMAGES.tpgardenmainpuri6,
+        IMAGES.tpgardenmainpuri7,
+      ],
+      location: "MD Grand Hotel & Resort, NH11, jaipur highway road, nahar, near Patholi, Patholi, Uttar Pradesh 283105",
+      onboardedDate: "2026-11-16",
+      description:
+        "TP Garden and Hotel is a hotel, banquet hall, and event venue on Station Road in Devpura, Mainpuri, Uttar Pradesh, offering rooms, dining, and lawn/banquet spaces for stays and celebrations."
+    },
+    {
       id: "158",
       name: "Shreeji Villa Gir",
       images: [
